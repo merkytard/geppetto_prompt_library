@@ -1,0 +1,69 @@
+/ (root)
+├── README.md
+├── commit_tester.bat
+├── commit_tester.py
+├── g-geppetto-dashboard
+│   ├── build
+│   │   └── geppetto_dashboard
+│   │       ├── Analysis-00.toc
+│   │       ├── EXE-00.toc
+│   │       ├── PKG-00.toc
+│   │       ├── PYZ-00.pyz
+│   │       ├── PYZ-00.toc
+│   │       ├── base_library.zip
+│   │       ├── geppetto_dashboard.pkg
+│   │       ├── localpycs
+│   │       │   ├── pyimod01_archive.pyc
+│   │       │   ├── pyimod02_importers.pyc
+│   │       │   ├── pyimod03_ctypes.pyc
+│   │       │   ├── pyimod04_pywin32.pyc
+│   │       │   └── struct.pyc
+│   │       ├── warn-geppetto_dashboard.txt
+│   │       └── xref-geppetto_dashboard.html
+│   ├── dist
+│   │   └── geppetto_dashboard.exe
+│   ├── geppetto_dashboard.py
+│   └── geppetto_dashboard.spec
+├── generate_tree_structure.py
+├── geppetto_system_docs
+│   ├── auto_sync_bookmarks.py
+│   └── g-naming-convention.yml
+├── master_sync_prompts.json
+├── privacy.md
+├── prompt_index.json
+├── prompts
+│   └── custom_model
+│       ├── action_bridge.json
+│       ├── aktivacia_zameru.json
+│       ├── archetyp_snov.json
+│       ├── bookmarks.json
+│       ├── destruktivne_vzory.json
+│       ├── dynamic_layer_engine.json
+│       ├── explozia_moznosti.json
+│       ├── extended_prompt_management.json
+│       ├── geppetto_workflow.json
+│       ├── jazyk_emocii.json
+│       ├── most_medzi_svetmi.json
+│       ├── novy_impulz.json
+│       ├── orchestrator.json
+│       ├── prompts.yml
+│       ├── pulse_tick_manager.json
+│       ├── pulz_zameru.json
+│       ├── synchronizacia_vrstiev.json
+│       ├── test_commit_from_geppetto.json
+│       ├── triangel.json
+│       └── vnutorna_reflexia.json
+├── prompts.yml
+├── prompts_full.yml
+├── requirements.txt
+├── start_geppetto_system.bat
+├── sync_prompts_folder.py
+├── token_loader.py
+├── tools
+│   ├── auto_git_sync.py
+│   ├── tick_engine.py
+│   └── tick_reflex_listener.py
+├── update_git.bat
+├── update_prompts.bat
+├── upload_to_github.py
+└── webhook_server.py
