@@ -1,0 +1,36 @@
+
+prefixes:
+  g-: "Hlavné systémové skripty (navigátor, synchronizátor, router)"
+  g4-: "Experimentálne vrstvy a testovacie moduly"
+  p-: "Prompty – buď system alebo creative"
+  t-: "Testovacie a validačné skripty"
+  a-: "Archívy – snapshoty, zálohy, exporty"
+  i-: "Indexové súbory – script, prompt, project"
+  ui-: "UI komponenty pre React alebo Vercel"
+  sync-: "Synchronizačné a transformačné nástroje"
+  D:: "Dokumentácia (Markdown, poznámky, flow)"
+  P:: "Projekty a moduly (prototypy, MVP, systémy)"
+
+naming_rules:
+  snake_case: true
+  max_filename_length: 64
+  allow_unicode: false
+  required_metadata_fields:
+    - type
+    - description
+    - created_at
+    - tags
+
+index_map:
+  geppetto_script_index.json: "Hlavný zoznam skriptov"
+  geppetto_index.py: "Importovateľný Python modul (živý register)"
+  prompt_index.json: "Zoznam promptov podľa typu/tagov"
+  structure.yml: "Štruktúra priečinkov a navrhnutý poriadok"
+  _index-main-git.json: "Externé odkazy z GitHubu (raw)"
+
+recommended_suffixes:
+  .json: "Dáta, manifest, index"
+  .yml: "Konfigurácia, štruktúra"
+  .md: "Dokumentácia"
+  .ts/.tsx: "UI komponenty"
+  .py: "Skript/Engine/Agent"
