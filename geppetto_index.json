@@ -1,0 +1,21 @@
+{
+  "core": [
+    {
+      "name": "g.py",
+      "path": "core/g.py",
+      "size_kb": 1.05
+    },
+    {
+      "name": "GEPPETTO_CORE.py",
+      "path": "core/GEPPETTO_CORE.py",
+      "size_kb": 2.84
+    }
+  ],
+  "prompts": [
+    {
+      "name": "react_lib.txt",
+      "path": "prompts/custom_model/react_lib.txt",
+      "size_kb": 0.036
+    }
+  ]
+}
