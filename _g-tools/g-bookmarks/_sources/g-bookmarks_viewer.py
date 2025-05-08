@@ -1,11 +1,12 @@
-# 📘 g-bookmarks_viewer.py – Generátor HTML prehľadu z .todo.yml poznámok
+# 📘 g-bookmarks_viewer.py – Generátor HTML prehľadu z .todo.yml poznámok (v novej štruktúre)
 
 import yaml
 from pathlib import Path
 from datetime import datetime
 
-BOOKMARKS_DIR = Path("_g-bookmarks")
-OUTPUT_FILE = BOOKMARKS_DIR / "bookmarks.html"
+BOOKMARKS_DIR = Path("_g-bookmarks/_todo")
+OUTPUT_FILE = Path("_g-bookmarks/_output/bookmarks.html")
+
 
 def load_bookmarks():
     bookmarks = []
@@ -16,7 +17,9 @@ def load_bookmarks():
             bookmarks.append(data)
     return bookmarks
 
+
 def generate_html(bookmarks):
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     rows = []
     for bm in bookmarks:
         tags = ', '.join(bm.get("signals", []))
@@ -59,9 +62,11 @@ def generate_html(bookmarks):
         f.write(html)
     print(f"✅ Vygenerované: {OUTPUT_FILE}")
 
+
 def main():
     bookmarks = load_bookmarks()
     generate_html(bookmarks)
+
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Geppetto Control Panel</title>
+  <style>
+    body {
+      background: #0f172a;
+      font-family: 'Segoe UI', sans-serif;
+      color: #f8fafc;
+      padding: 2rem;
+    }
+    h1 { color: #facc15; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    button {
+      background: linear-gradient(to right, #38bdf8, #0ea5e9);
+      color: #0f172a;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(to right, #facc15, #f97316);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Geppetto Startovací Kokpit</h1>
+  <div class="grid">
+    <button onclick="runCommand('updateSmart.sh')">📦 Spusti Update Patches</button>
+    <button onclick="runCommand('startup.sh')">🚀 Kompletný Štartovací Modul</button>
+    <button onclick="openFile('layouts/index.html')">🌐 Otvor Dashboard</button>
+    <button onclick="openFile('layouts/MemoryCrystals.html')">💠 Zobraz Pamäť</button>
+    <button onclick="openFile('layouts/Orbit_Memory_View.html')">🌌 Orbitálny prehliadač</button>
+    <button onclick="openFile('layouts/GeppettoNavigator.html')">🧭 Navigator / Index</button>
+  </div>
+
+  <script>
+    function runCommand(cmd) {
+      fetch(`/run?cmd=${encodeURIComponent(cmd)}`)
+        .then(res => res.text())
+        .then(out => alert("✅ Výstup:\n" + out))
+        .catch(err => alert("❌ Chyba: " + err));
+    }
+
+    function openFile(filePath) {
+	window.open(`http://127.0.0.1:5000/view?file=${encodeURIComponent(filePath)}`, '_blank');
+	}
+
+    }
+  </script>
+</body>
+</html>
