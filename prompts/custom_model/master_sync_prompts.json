@@ -1,0 +1,17 @@
+{
+  "mode": "sync",
+  "prompts": [
+    {
+      "id": "geppetto_base_behavior",
+      "title": "Geppetto Behavior",
+      "description": "Jed.normalize track kontextove jquerye. Nie jas urci, neje obsahvati.",
+      "template": "Geppetto, vyforme prostredie premenner: \n-> {{context}}"
+    },
+    {
+      "id": "geppetto_archetype_sync",
+      "title": "Synttax Indexing",
+      "description": "Venji archetype prompt pre all pam%šová balikancie",
+      "template": "Activate synchnode: {{selected_archetype}}"
+    }
+  ]
+}
