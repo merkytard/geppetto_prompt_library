@@ -1,0 +1,1 @@
+function manageLayers() { var doc = app.activeDocument; var layers = doc.layers; alert("Počet vrstiev: " + layers.length); }

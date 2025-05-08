@@ -1,0 +1,10 @@
+{
+  "id": "Playground_geppetto-orchestrator",
+  "version": "1.0.0",
+  "name": "Geppetto Orchestrator",
+  "main": "main.js",
+  "host": {
+    "app": "PS",
+    "minVersion": "22.0.0"
+  }
+}

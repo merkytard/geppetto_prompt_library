@@ -8,7 +8,7 @@ from watchdog.events import FileSystemEventHandler
 
 BOOKMARKS_DIR = Path("_g-bookmarks/_todo")
 VIEWER_SCRIPT = Path("_g-bookmarks/_sources/g-bookmarks_viewer.py")
-DEBOUNCE_SECONDS = 180
+DEBOUNCE_SECONDS = 5
 
 last_modified = None
 last_file = None
@@ -25,7 +25,7 @@ class BookmarkHandler(FileSystemEventHandler):
 
 
 def debounce_loop():
-    print(f"👀 Sledujem zmeny v {BOOKMARKS_DIR}/... (debounce {DEBOUNCE_SECONDS//60} min)")
+    print(f"👀 Sledujem zmeny v {BOOKMARKS_DIR}/... (debounce {DEBOUNCE_SECONDS//10} min)")
     while True:
         time.sleep(5)
         if last_modified and (time.time() - last_modified > DEBOUNCE_SECONDS):
