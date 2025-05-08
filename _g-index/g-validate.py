@@ -6,7 +6,7 @@ import yaml
 from pathlib import Path
 from datetime import datetime
 
-BASE = Path("_g-Geppetto-System")
+BASE = Path(".")
 INDEX_PATH = BASE / "_g-index" / "index.py"
 MANIFEST_PATH = BASE / "_g-index" / "document_manifest.yml"
 MIRROR_LOG_PATH = BASE / "_g-memory" / "mirror_log.jsonl"
