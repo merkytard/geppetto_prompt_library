@@ -1,0 +1,93 @@
+body {
+    font-family: 'Arial', sans-serif;
+    padding: 10px;
+    background-color: #1E1E1E; /* Tmavé pozadie */
+    color: #FFFFFF; /* Biela farba textu */
+    text-align: center;
+}
+
+sp-heading {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #00FF00; /* Zelená farba pre nadpisy */
+}
+
+sp-body {
+    display: block;
+    margin: 5px 0;
+    color: #FFFFFF; /* Biela farba textu */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+sp-button {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+}
+
+sp-button:hover {
+    background-color: #4A4A4A; /* Sivá farba pri hover */
+}
+
+.activity-indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.activity-indicator.green {
+    background-color: #00FF00; /* Zelená farba pre aktívnu indikáciu */
+}
+
+.activity-indicator.red {
+    background-color: #FF0000; /* Červená farba pre chybovú indikáciu */
+}
+
+.console {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #2E2E2E; /* Tmavšie pozadie pre konzolu */
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#consoleOutput {
+    font-family: monospace;
+    font-size: 12px;
+    color: #00FF00; /* Zelená farba pre text konzoly */
+}
+
+footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #888; /* Sivá farba pre footer */
+}
+
+sp-checkbox {
+    margin-top: 10px;
+    display: block;
+    color: #FFFFFF; /* Biela farba pre checkboxy */
+}
+
+.layers-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #444;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #2E2E2E;
+    border-radius: 5px;
+}

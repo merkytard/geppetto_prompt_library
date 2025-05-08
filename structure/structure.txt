@@ -1,0 +1,226 @@
+/ (root)
+├── README.md
+├── [path].ts
+├── __pycache__
+│   └── token_loader.cpython-313.pyc
+├── g-geppetto
+│   ├── archives
+│   │   ├── GEPPETTO_ULTIMATE_DEPLOY_FINAL
+│   │   │   ├── Archivon_Core_UPDATED.json
+│   │   │   ├── ZALOOP_FLOW.json
+│   │   │   ├── ZALOOP_pulse_animacia.gif
+│   │   │   ├── ZALOOP_spectrum_animacia.gif
+│   │   │   ├── ZALOOP_spectrum_with_glyphs.gif
+│   │   │   ├── archetype-002.json
+│   │   │   ├── augmented_matrix_export.json
+│   │   │   ├── avatar_manifest.json
+│   │   │   ├── bit_matrix_777.json
+│   │   │   ├── capsule_symphony_midi_generator.py
+│   │   │   ├── decision_resonator_log.json
+│   │   │   ├── echo_grid_anim.gif
+│   │   │   ├── geppetto_avatar_preview.png
+│   │   │   ├── glyph_dictionary.json
+│   │   │   ├── goal_guard.json
+│   │   │   ├── harmonia_core.json
+│   │   │   ├── historical_trace_log.json
+│   │   │   ├── idea_trace_log.json
+│   │   │   ├── memory_token_archetype-002.json
+│   │   │   ├── memory_token_index.json
+│   │   │   ├── merged_core_with_rgba_fixed.json
+│   │   │   ├── mirror_echo_grid.py
+│   │   │   └── registry_overview.json
+│   │   ├── Geppetto_OS_v1.zip
+│   │   ├── _GeppettoEgg
+│   │   │   └── geppetto_master_memory_pack.zip
+│   │   └── advanced_extract_ui
+│   │       ├── U_structure.json
+│   │       ├── advanced_extract_layout.py
+│   │       ├── advanced_extract_layout_with_lines.py
+│   │       ├── advanced_extract_ui.py
+│   │       ├── advanced_layout_structure.json
+│   │       ├── extract_ui.py
+│   │       ├── generate_html_from_json.py
+│   │       ├── generate_interactive_html.py
+│   │       ├── generated_mvp.html
+│   │       ├── generated_ui.html
+│   │       ├── index.html
+│   │       ├── input_ui.png
+│   │       ├── install_dependencies.sh
+│   │       ├── output_with_layout.png
+│   │       ├── setup_dependencies.py
+│   │       └── tesseract_config.txt
+│   ├── core
+│   │   ├── g.py
+│   │   └── geppetto_commit_logger.py
+│   ├── experimental
+│   │   └── _FinalVersionPlugins_Photoshop
+│   │       ├── Geppeto_EnhancerPRO
+│   │       │   ├── LICENSE
+│   │       │   ├── README.md
+│   │       │   ├── icons
+│   │       │   │   ├── dark@1x.png
+│   │       │   │   ├── dark@2x.png
+│   │       │   │   ├── light@1x.png
+│   │       │   │   └── light@2x.png
+│   │       │   ├── index.html
+│   │       │   ├── index.js
+│   │       │   ├── manifest.json
+│   │       │   ├── package.json
+│   │       │   ├── style.css
+│   │       │   └── watch.sh
+│   │       ├── GeppettoCore_UXP
+│   │       │   ├── index.html
+│   │       │   ├── main.js
+│   │       │   ├── manifest.js
+│   │       │   ├── manifest.json
+│   │       │   ├── script.js
+│   │       │   ├── scripts.js
+│   │       │   └── style.css
+│   │       ├── Geppetto_CEP_Panel
+│   │       │   ├── CSXS
+│   │       │   │   └── manifest.xml
+│   │       │   ├── css
+│   │       │   │   └── style.css
+│   │       │   ├── index.html
+│   │       │   ├── js
+│   │       │   │   ├── CSInterface.js
+│   │       │   │   ├── GeppettoCore.js
+│   │       │   │   ├── GeppettoLayer.js
+│   │       │   │   ├── GeppettoNode.js
+│   │       │   │   ├── GeppettoSync.js
+│   │       │   │   ├── init.js
+│   │       │   │   └── main.js
+│   │       │   ├── jsx
+│   │       │   │   ├── GeppettoCore.jsx
+│   │       │   │   ├── GeppettoLayer.jsx
+│   │       │   │   ├── GeppettoNode.jsx
+│   │       │   │   ├── GeppettoSync.jsx
+│   │       │   │   ├── export.jsx
+│   │       │   │   ├── getLayers.jsx
+│   │       │   │   └── host.jsx
+│   │       │   └── manifest.json
+│   │       ├── Geppetto_Hub
+│   │       │   ├── LICENSE
+│   │       │   ├── README.md
+│   │       │   ├── icons
+│   │       │   │   ├── dark@1x.png
+│   │       │   │   ├── dark@2x.png
+│   │       │   │   ├── light@1x.png
+│   │       │   │   └── light@2x.png
+│   │       │   ├── index.html
+│   │       │   ├── main.js
+│   │       │   ├── manifest.json
+│   │       │   ├── package.json
+│   │       │   ├── style.css
+│   │       │   └── watch.sh
+│   │       ├── Geppetto_Hub.zip
+│   │       ├── Geppetto_Layer
+│   │       │   ├── LICENSE
+│   │       │   ├── README.md
+│   │       │   ├── icons
+│   │       │   │   ├── dark@1x.png
+│   │       │   │   ├── dark@2x.png
+│   │       │   │   ├── light@1x.png
+│   │       │   │   └── light@2x.png
+│   │       │   ├── index.html
+│   │       │   ├── main.js
+│   │       │   ├── manifest.json
+│   │       │   ├── package.json
+│   │       │   ├── style.css
+│   │       │   └── watch.sh
+│   │       ├── Geppetto_Node
+│   │       │   ├── LICENSE
+│   │       │   ├── README.md
+│   │       │   ├── icons
+│   │       │   │   ├── dark@1x.png
+│   │       │   │   ├── dark@2x.png
+│   │       │   │   ├── light@1x.png
+│   │       │   │   └── light@2x.png
+│   │       │   ├── index.html
+│   │       │   ├── main.js
+│   │       │   ├── manifest.json
+│   │       │   ├── package.json
+│   │       │   ├── style.css
+│   │       │   └── watch.sh
+│   │       ├── Geppetto_Sync
+│   │       │   ├── LICENSE
+│   │       │   ├── README.md
+│   │       │   ├── icons
+│   │       │   │   ├── dark@1x.png
+│   │       │   │   ├── dark@2x.png
+│   │       │   │   ├── light@1x.png
+│   │       │   │   └── light@2x.png
+│   │       │   ├── index.html
+│   │       │   ├── main.js
+│   │       │   ├── manifest.json
+│   │       │   ├── package.json
+│   │       │   ├── style.css
+│   │       │   └── watch.sh
+│   │       ├── Geppetto_UXP_Loader
+│   │       │   ├── index.html
+│   │       │   ├── main.js
+│   │       │   ├── manifest.json
+│   │       │   └── style.css
+│   │       ├── PluginsAndHub
+│   │       │   ├── GeppettoCore_UXP.zip
+│   │       │   ├── Geppetto_CEP_Panel.zip
+│   │       │   ├── Geppetto_Hub.zip
+│   │       │   ├── Geppetto_Layer (2).zip
+│   │       │   ├── Geppetto_Layer.zip
+│   │       │   ├── Geppetto_Node.zip
+│   │       │   └── Geppetto_Sync.zip
+│   │       └── PluginsAndHub.zip
+│   ├── geppetto.json
+│   ├── geppetto_index.json
+│   ├── manifest
+│   │   └── g4_resonance_expansion_manifest.json
+│   ├── master_sync_prompts.json
+│   ├── memory
+│   ├── naming
+│   │   └── g-naming-convention.yml
+│   ├── prompt_index.json
+│   ├── prompts
+│   │   └── custom_model
+│   │       ├── action_bridge.json
+│   │       ├── aktivacia_zameru.json
+│   │       ├── archetyp_snov.json
+│   │       ├── bookmarks.json
+│   │       ├── destruktivne_vzory.json
+│   │       ├── dynamic_layer_engine.json
+│   │       ├── explozia_moznosti.json
+│   │       ├── extended_prompt_management.json
+│   │       ├── geppetto_workflow.json
+│   │       ├── jazyk_emocii.json
+│   │       ├── master_sync_prompts.json
+│   │       ├── most_medzi_svetmi.json
+│   │       ├── novy_impulz.json
+│   │       ├── orchestrator.json
+│   │       ├── prompts.yml
+│   │       ├── pulse_tick_manager.json
+│   │       ├── pulz_zameru.json
+│   │       ├── synchronizacia_vrstiev.json
+│   │       ├── test_commit_from_geppetto.json
+│   │       ├── triangel.json
+│   │       └── vnutorna_reflexia.json
+│   ├── prompts.yml
+│   ├── prompts_full.yml
+│   └── tools
+│       ├── auto_git_sync.py
+│       ├── auto_sync_bookmarks.py
+│       ├── tick_engine.py
+│       └── tick_reflex_listener.py
+├── g-react-dependecies
+├── g-react-libs
+│   └── geppetto.json
+├── generate_tree_structure.py
+├── privacy.md
+├── push_secrets_to_github.py
+├── react_libs
+├── requirements.txt
+├── slnx.sqlite
+├── structure
+│   ├── generate_tree_structure.py
+│   ├── structure.txt
+│   └── structure.yml
+├── vercel.json
+└── webhook_server.py

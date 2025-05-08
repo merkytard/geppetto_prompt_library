@@ -1,0 +1,9 @@
+{
+  "title": "ActionBridge",
+  "description": "Most medzi trigger-event manažmentom a akciami vrstiev.",
+  "core_elements": [
+    "Príjem udalosti",
+    "Mapovanie vrstvy",
+    "Aktivácia spätnej väzby"
+  ]
+}

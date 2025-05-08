@@ -1,0 +1,22 @@
+<ExtensionManifest Version="7.0">
+    <ExtensionList>
+        <Extension Id="com.geppetto.panel.v2"/>
+    </ExtensionList>
+    <ExecutionEnvironment>
+        <HostList>
+            <Host Name="PHXS" Version="24.0"/>
+        </HostList>
+    </ExecutionEnvironment>
+    <DispatchInfoList>
+        <Extension Id="com.geppetto.panel">
+            <DispatchInfo>
+                <Resources>
+                    <MainPath>index.html</MainPath>
+                </Resources>
+                <Lifecycle>
+                    <AutoVisible>true</AutoVisible>
+                </Lifecycle>
+            </DispatchInfo>
+        </Extension>
+    </DispatchInfoList>
+</ExtensionManifest>

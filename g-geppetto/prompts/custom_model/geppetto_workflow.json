@@ -1,0 +1,12 @@
+{
+  "title": "Geppetto Workflow",
+  "description": "Opis fáz vývoja: Koncept → Náčrt → MVP → Test → Polish → Prezentácia",
+  "phases": [
+    "Koncept",
+    "Náčrt",
+    "MVP",
+    "Test",
+    "Polish",
+    "Prezentácia"
+  ]
+}

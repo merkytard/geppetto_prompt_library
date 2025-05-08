@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphics Enhancer PRO</title>
+    <script src="index.js"></script>
+    <style>
+        :root {
+            --bg-color: #2D2D2D;
+            --text-color: #FFFFFF;
+            --button-color: #3E3E3E;
+            --button-hover: #4A90E2;
+            --slider-track: #4A4A4A;
+            --slider-thumb: #FFCC00;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--button-hover);
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .slider-container {
+            margin: 10px 0;
+        }
+
+        label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: var(--slider-track);
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.9;
+            transition: opacity .15s ease-in-out;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: var(--slider-thumb);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            cursor: pointer;
+            background: var(--button-color);
+            color: var(--text-color);
+            border: none;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: background 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background: var(--button-hover);
+            transform: scale(1.02);
+        }
+
+        .preset-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .theme-toggle {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        #preview {
+            width: 100%;
+            height: 100px;
+            background: url('preview.png');
+            background-size: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Graphics Enhancer PRO</h2>
+
+    <div id="preview"></div>
+
+    <div class="slider-container">
+        <label>Jas: <span id="brightnessValue">0</span></label>
+        <input type="range" id="brightness" min="-100" max="100" value="0">
+    </div>
+    <div class="slider-container">
+        <label>Kontrast: <span id="contrastValue">0</span></label>
+        <input type="range" id="contrast" min="-100" max="100" value="0">
+    </div>
+    <div class="slider-container">
+        <label>Intenzita: <span id="intensityValue">0</span></label>
+        <input type="range" id="intensity" min="-100" max="100" value="0">
+    </div>
+    <div class="slider-container">
+        <label>Saturácia: <span id="saturationValue">0</span></label>
+        <input type="range" id="saturation" min="-100" max="100" value="0">
+    </div>
+
+    <button id="apply">Použiť úpravy</button>
+    <button id="applyAll">Aplikovať na všetky vrstvy</button>
+    <button id="reset">Reset</button>
+
+    <div class="preset-container">
+        <button id="savePreset">Uložiť preset</button>
+        <button id="loadPreset">Načítať preset</button>
+    </div>
+
+    <div class="theme-toggle">
+        <button id="toggleTheme">Prepínač témy</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+prompts:
+- Orchestrator
+- Pulz zámeru
+- Aktivácia Zámeru
+- Archetyp snov
+- Bookmarks
+- Deštruktívne vzory
+- Explózia možností
+- Jazyk emócií
+- Most medzi svetmi
+- Nový impulz
+- Synchronizácia vrstiev
+- Triangel
+- Vnútorná reflexia
+details:
+- name: Orchestrator
+  type: system_prompt
+  tags:
+  - system
+  - navigation
+  - restart
+  created_at: '2025-04-27T16:55:00'
+  file: prompts/custom_model/orchestrator.json
+- name: Pulz zámeru
+  type: creative_prompt
+  tags:
+  - ritmus
+  - aktivacia
+  - zamer
+  created_at: '2025-04-27T17:02:00'
+  file: prompts/custom_model/pulz_zameru.json
+- name: Aktivácia Zámeru
+  type: creative_prompt
+  tags:
+  - zamer
+  - aktivacia
+  - novy_start
+  created_at: '2025-04-27T16:58:00'
+  file: prompts/custom_model/aktivacia_zameru.json
+- name: Archetyp snov
+  type: creative_prompt
+  tags:
+  - archetyp
+  - vizia
+  - tvorba
+  created_at: '2025-04-27T17:04:00'
+  file: prompts/custom_model/archetyp_snov.json
+- name: Bookmarks
+  type: system_prompt
+  tags:
+  - notes
+  - capture
+  - documentation
+  created_at: '2025-04-27T16:56:00'
+  file: prompts/custom_model/bookmarks.json
+- name: Deštruktívne vzory
+  type: creative_prompt
+  tags:
+  - cistenie
+  - bloky
+  - zmena
+  created_at: '2025-04-27T17:01:00'
+  file: prompts/custom_model/destruktivne_vzory.json
+- name: Explózia možností
+  type: creative_prompt
+  tags:
+  - moznosti
+  - tvorivost
+  - expand
+  created_at: '2025-04-27T17:05:00'
+  file: prompts/custom_model/explozia_moznosti.json
+- name: Jazyk emócií
+  type: creative_prompt
+  tags:
+  - emocie
+  - symbolika
+  - jazyk
+  created_at: '2025-04-27T17:07:00'
+  file: prompts/custom_model/jazyk_emocii.json
+- name: Most medzi svetmi
+  type: creative_prompt
+  tags:
+  - most
+  - svety
+  - spojenie
+  created_at: '2025-04-27T17:06:00'
+  file: prompts/custom_model/most_medzi_svetmi.json
+- name: Nový impulz
+  type: creative_prompt
+  tags:
+  - tvorba
+  - energia
+  - novy_pohyb
+  created_at: '2025-04-27T16:59:00'
+  file: prompts/custom_model/novy_impulz.json
+- name: Synchronizácia vrstiev
+  type: creative_prompt
+  tags:
+  - synchronizacia
+  - flow
+  - spojenie
+  created_at: '2025-04-27T17:03:00'
+  file: prompts/custom_model/synchronizacia_vrstiev.json
+- name: Triangel
+  type: system_prompt
+  tags:
+  - balance
+  - design
+  - efficiency
+  created_at: '2025-04-27T16:57:00'
+  file: prompts/custom_model/triangel.json
+- name: Vnútorná reflexia
+  type: creative_prompt
+  tags:
+  - reflexia
+  - sebaotázky
+  - stav
+  created_at: '2025-04-27T17:00:00'
+  file: prompts/custom_model/vnutorna_reflexia.json

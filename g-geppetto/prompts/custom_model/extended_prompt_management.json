@@ -1,0 +1,10 @@
+{
+  "title": "Extended Prompt Management",
+  "description": "Rídenie životného cyklu promptov.",
+  "stages": [
+    "Draft",
+    "Review",
+    "Publish",
+    "Archive"
+  ]
+}

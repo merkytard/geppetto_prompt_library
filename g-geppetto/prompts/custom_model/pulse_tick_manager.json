@@ -1,0 +1,9 @@
+{
+  "title": "Pulse-Tick Memory Manager",
+  "description": "Správa časových a impulzných udalostí v systéme pamäte.",
+  "functions": [
+    "Zachytávanie tick udalostí",
+    "Vytváranie pamäťových fragmentov",
+    "Analýza frekvencie impulzov"
+  ]
+}

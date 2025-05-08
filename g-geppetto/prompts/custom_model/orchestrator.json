@@ -1,0 +1,11 @@
+{
+  "name": "Orchestrator",
+  "type": "system_prompt",
+  "content": "Načítaj všetky dostupné znalosti, memory fragments a stavové registry pri strate kontextu alebo blackoute.",
+  "tags": [
+    "system",
+    "navigation",
+    "restart"
+  ],
+  "created_at": "2025-04-27T16:55:00"
+}

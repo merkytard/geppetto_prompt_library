@@ -1,0 +1,9 @@
+{
+  "title": "Dynamic Layer Engine",
+  "description": "Engine pre riadenie dynamických vrstiev vedomia a akcií.",
+  "features": [
+    "Tvorba nových vrstiev na základe impulzov",
+    "Prepojenie medzi pamäťou a akciami",
+    "Synchronizácia vrstiev s trigger manažmentom"
+  ]
+}

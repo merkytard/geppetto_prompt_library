@@ -1,0 +1,160 @@
+├── _g-Geppetto-System
+  ├──   _g-core
+    ├──   g-manager
+ _a-Aaaa-aaa
+  _a-aaaa-aaa
+   a-aaaa-aaa
+    aaaa-aaa_v1
+
+_a-Aaaa-aaa_v1
+_a-Aaaa-aaa_v10
+_a-Aaaa-aaa_17042025 (final)
+
+
+# Geppetto Prompt Library v1
+
+## 📖 Popis
+Táto knižnica obsahuje štruktúru systémových a tvorivých promptov určených pre Geppetto systém.
+Každý prompt je samostatný `.json` s definovaným áčelom, typom a obsahom.
+
+## 📅 Dátum
+Vytvorené: 2025-04-27
+
+## 🔄 Štruktúra
+```
+/prompts/
+   /custom_model/
+      orchestrator.json
+      bookmarks.json
+      triangel.json
+      aktivacia_zameru.json
+      novy_impulz.json
+      vnutorna_reflexia.json
+      destruktivne_vzory.json
+      pulz_zameru.json
+      synchronizacia_vrstiev.json
+      archetyp_snov.json
+      explozia_moznosti.json
+      most_medzi_svetmi.json
+      jazyk_emocii.json
+```
+
+## 🌍 Pravidlá
+- Každý prompt obsahuje:
+  - `name` (názov promptu)
+  - `type` (typ promptu: system_prompt / creative_prompt)
+  - `content` (text obsahu)
+  - `tags` (témy alebo kategórie)
+  - `created_at` (ISO časová značka)
+
+## 🔐 Použitie
+- Prompty sa načítavajú automaticky cez `sync_prompts_from_git()`.
+- Každý prompt môže byť aktivovaný samostatne.
+
+## 🔺 Ciele
+- Štandardizovať proces tvorby a aktivácie znalostných vrstiev.
+- Zjednodušiť navigáciu v komplexných projektoch.
+- Poskytnúť pevne definované body aktivácie a reflexie.
+
+---
+
+✨ **Neustále žijeme vo vlnách tvorby. Každý prompt je pulz.**
+
+Geppetto Workflow (stručný formát)
+
+Základné hodnoty
+
+Pravda, funkčnosť, jednoduchosť.
+
+Tvorba je rytmus, nie chaos.
+
+MVP je živý pulz, nie výhovorka.
+
+Fázy vývoja
+
+Koncept: Zámer a vízia → 1-2 vety.
+
+Náčrt: Hrubý návrh → bez detailov, len hlavné body.
+
+MVP: Minimálna plne funkčná jednotka → nesmie byť len teória.
+
+Test: Funkčné overenie → ručne alebo scriptom.
+
+Polish: Vylepšenie pre stabilitu a eleganciu.
+
+Produkcia: Nasadenie → verzia pre externé použitie.
+
+INVEST pravidlá (Geppetto štýl)
+
+I: Úloha musí byť oddeliteľná a samostatná.
+
+N: Zadanie je otvorené na zlepšenie počas vývoja.
+
+V: Každý krok prináša hodnotu (agent, človek, systém).
+
+E: Musí sa dať odhadnúť (low, mid, high effort).
+
+S: Malé deliverables. Radšej viac iterácií ako 1 veľký projekt.
+
+T: Testovateľnosť je podmienka → aj keď len ručne.
+
+RFV model (Geppetto verzia)
+
+Role: Pre koho je to (agent, vrstva, tvorca, používateľ)
+
+Feature: Čo nového prináša (funkcia, správanie, proces)
+
+Value: Prečo je to dôležité (dôsledok, dopad, zlepšenie)
+
+Definícia kvality
+
+Pre-MVP: Funkčný základ, môže obsahovať improvizácie.
+
+MVP Ready: Použiteľné, ale nie vyleštené. Funguje.
+
+Production Ready: Optimalizované, zdokumentované, elegantné.
+
+Decision Gates (kontrolné body)
+
+Pred každým posunom fázy → krátka otázka:
+
+Koncept → Náčrt: "Je zámer jasný?"
+
+Náčrt → MVP: "Môžeme to vyskúšať reálne?"
+
+MVP → Test: "Funguje základný scenár bez hackov?"
+
+Test → Polish: "Je to stabilné, alebo ešte padá?"
+
+Polish → Produkcia: "Je to hrdé Geppetto dielo?"
+
+Custom Geppetto System Prompty
+
+#orchestrator
+
+Úcel: Načíta všetky relevantné znalosti, kontexty a memory fragments, ak sa objaví nedorozumenie alebo potreba reštartu navigácie.
+
+Spôsob použitia: Aktivuj ak máš pocit, že kontext sa stratil alebo sa zacyklil.
+
+#bookmarks
+
+Úcel: Zachytí dôležité poznámky, rozhodnutia, inšpirácie alebo výsledky procesov. Automatizuje zápis do dokumentácie.
+
+Spôsob použitia: Označ čokoľkoľvek čo má byť uchované alebo poznačené pre ďalšie spracovanie.
+
+#triangel
+
+Úcel: Vyváženie medzi Funkčnosťou (Functionality), Estetikou (Aesthetics) a Efektivitou (Efficiency). Vždy sa pýta:
+
+"Je funkcia dostatočne krásna na to, aby bola živá?"
+
+"Je estetika podporená skutočnou funkciou?"
+
+Pravidlo: Funkčnosť je základ, estetika je zosilňovač. Nikdy estetika na úkor funkcie.
+
+Pravidlo dňa
+
+Kód, systém, prompt = živý organizmus.
+Stále dýchame, ladíme a žijeme vo vlnách tvorby.
+
+

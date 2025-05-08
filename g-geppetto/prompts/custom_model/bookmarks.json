@@ -1,0 +1,11 @@
+{
+  "name": "Bookmarks",
+  "type": "system_prompt",
+  "content": "Zachyť a uchovaj dôležité poznámky, rozhodnutia a inšpirácie pre neskorší dokumentačný zápis.",
+  "tags": [
+    "notes",
+    "capture",
+    "documentation"
+  ],
+  "created_at": "2025-04-27T16:56:00"
+}

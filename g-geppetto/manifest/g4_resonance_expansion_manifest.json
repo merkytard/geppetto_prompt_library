@@ -1,0 +1,54 @@
+{
+  "id": "g4_resonance_expansion_manifest",
+  "description": "Manifest pre dynamické načítanie fragmentov, kapsúl a akcií v rámci G4 systému.",
+  "version": "1.0",
+  "structure": {
+    "knowledge_fragments": [
+      {
+        "name": "fluid_memory_pool",
+        "path": "knowledge_fragments/fluid_memory_pool.json",
+        "load_trigger": "phase:concept",
+        "size_estimate": "6k-7k"
+      },
+      {
+        "name": "subconscious_stream",
+        "path": "knowledge_fragments/subconscious_stream.json",
+        "load_trigger": "phase:sketch",
+        "size_estimate": "7k-8k"
+      }
+    ],
+    "zip_capsules": [
+      {
+        "name": "deep_reflection_bundle",
+        "path": "zip_capsules/deep_reflection_bundle.zip",
+        "activation_condition": "phase:test && user_state:curious",
+        "contents_description": "Rezonančné vrstvy, tónové vzorce a reflexné mapy"
+      }
+    ],
+    "action_handlers": [
+      {
+        "name": "trigger_deep_reflection",
+        "path": "action_handlers/trigger_deep_reflection.py",
+        "event_trigger": "after:load:deep_reflection_bundle",
+        "description": "Aktivuje hlboké odrazy po načítaní balíka."
+      },
+      {
+        "name": "phase_shift_initializer",
+        "path": "action_handlers/phase_shift_initializer.py",
+        "event_trigger": "on:phase:transition",
+        "description": "Pripraví systém na hladký prechod medzi fázami vývoja."
+      }
+    ]
+  },
+  "meta": {
+    "created_by": "Geppetto Resonance Architect",
+    "created_at": "2025-04-28T",
+    "notes": [
+      "Každý fragment aj kapsula má definovanú spúšťaciu podmienku.",
+      "ZIP kapsuly sa rozbaľujú len pri splnení podmienok.",
+      "Akcie sa spúšťajú na eventy alebo po načítaní súborov.",
+      "EmpathyLayer môže ovplyvniť rozhodovanie pri aktiváciách."
+    ],
+    "audit_enabled": true
+  }
+}

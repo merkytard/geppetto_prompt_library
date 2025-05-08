@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geppetto CEP Panel</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/init.js" defer></script>
+    <script src="./js/main.js" defer></script>
+    <script type="module" src="https://unpkg.com/@spectrum-web-components/button/sp-button.js"></script>
+    <script type="module" src="https://unpkg.com/@spectrum-web-components/icons/sp-icon.js"></script>
+    <script type="module" src="https://unpkg.com/@spectrum-web-components/checkbox/sp-checkbox.js"></script>
+</head>
+<body>
+    <sp-heading>Geppetto CEP Panel</sp-heading>
+    <sp-body id="layers">Žiadne vrstvy</sp-body>
+
+    <div class="button-container">
+        <sp-button id="btnPopulate" variant="primary">
+            <sp-icon name="ui:FolderOpen"></sp-icon>
+            Načítať vrstvy
+            <span id="loadIndicator" class="activity-indicator"></span>
+        </sp-button>
+        <sp-button id="syncLayers" variant="primary">
+            <sp-icon name="ui:Refresh"></sp-icon>
+            Synchronizovať vrstvy
+            <span id="syncIndicator" class="activity-indicator"></span>
+        </sp-button>
+        <sp-button id="exportLayers" variant="primary">
+            <sp-icon name="ui:Export"></sp-icon>
+            Exportovať vrstvy
+            <span id="exportIndicator" class="activity-indicator"></span>
+        </sp-button>
+        <sp-checkbox id="autoSyncCheckbox">Automatická synchronizácia</sp-checkbox>
+        <sp-checkbox id="autoExportCheckbox">Automatický export</sp-checkbox>
+    </div>
+
+    <div id="console" class="console">
+        <sp-heading>Konzola</sp-heading>
+        <div id="consoleOutput"></div>
+    </div>
+
+    <footer>
+        <sp-body>Geppetto CEP Panel v1.0.0</sp-body>
+    </footer>
+</body>
+</html>

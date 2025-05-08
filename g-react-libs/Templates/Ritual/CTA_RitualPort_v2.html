@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CTA Ritual Port v2</title>
+  <style>
+    body {
+      background-color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .cta-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cta-button {
+      background: radial-gradient(circle, #facc15, #f97316);
+      color: #0f172a;
+      padding: 1.2rem 2.5rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      box-shadow: 0 0 25px rgba(250, 204, 21, 0.4);
+      animation: ritualGlow 2.5s ease-in-out infinite;
+      cursor: pointer;
+    }
+    .cta-button:hover {
+      background: radial-gradient(circle, #fcd34d, #fb923c);
+    }
+    @keyframes ritualGlow {
+      0% { box-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(250, 204, 21, 0.8); }
+      100% { box-shadow: 0 0 15px rgba(250, 204, 21, 0.5); }
+    }
+    .tooltip {
+      margin-top: 0.8rem;
+      background-color: #334155;
+      color: #f1f5f9;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem;
+      font-size: 0.95rem;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .cta-button:hover + .tooltip {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="cta-wrapper">
+    <button class="cta-button">Otvoriť prechod</button>
+    <div class="tooltip">Začni rituál – tvoja cesta začína tu</div>
+  </div>
+</body>
+</html>

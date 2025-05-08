@@ -1,0 +1,39 @@
+{
+  "id": "Playground_com.adobe.geppetto.layers",
+  "name": "Geppetto Layer Manager",
+  "version": "1.0.0",
+  "main": "index.html",
+  "host": {
+    "app": "PS",
+    "minVersion": "23.0.0",
+    "data": {
+      "apiVersion": 2
+    }
+  },
+  "manifestVersion": 5,
+  "entrypoints": [
+    {
+      "type": "panel",
+      "id": "geppetto-panel",
+      "minimumSize": {
+        "width": 230,
+        "height": 200
+      },
+      "maximumSize": {
+        "width": 2000,
+        "height": 2000
+      },
+      "preferredDockedSize": {
+        "width": 230,
+        "height": 300
+      },
+      "preferredFloatingSize": {
+        "width": 230,
+        "height": 300
+      },
+      "label": {
+        "default": "Geppetto Layer Manager"
+      }
+    }
+  ]
+}

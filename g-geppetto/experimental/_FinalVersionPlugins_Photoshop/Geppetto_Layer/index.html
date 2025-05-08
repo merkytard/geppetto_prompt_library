@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geppetto Layers</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <div class="top-bar">
+    <h2>Geppetto Layers</h2>
+    <input type="text" id="searchLayer" placeholder="🔍 Search Layer...">
+  </div>
+
+  <div class="controls">
+    <label>Opacity</label>
+    <input type="range" id="globalOpacity" min="0" max="100" value="100">
+    <label>Blend Mode</label>
+    <select id="blendModeSelect">
+      <option value="normal">Normal</option>
+      <option value="multiply">Multiply</option>
+      <option value="screen">Screen</option>
+      <option value="overlay">Overlay</option>
+      <option value="darken">Darken</option>
+      <option value="lighten">Lighten</option>
+      <option value="color-dodge">Color Dodge</option>
+      <option value="color-burn">Color Burn</option>
+      <option value="soft-light">Soft Light</option>
+    </select>
+    <!-- Tlačidlo pre manuálny refresh vrstiev -->
+    <button class="btn" id="refreshLayers">Refresh Layers</button>
+  </div>
+
+  <div class="layers-container">
+    <!-- Fixné kontajnery: UI, GA, BG -->
+    <div class="layer-group fixed" id="uiGroup" data-container="UI">
+      <h3>UI</h3>
+      <div id="uiLayers"></div>
+    </div>
+
+    <div class="layer-group fixed" id="gaGroup" data-container="GA">
+      <h3>GA</h3>
+      <div id="gaLayers"></div>
+    </div>
+
+    <div class="layer-group fixed" id="bgGroup" data-container="BG">
+      <h3>BG</h3>
+      <div id="bgLayers"></div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+      
+    <button class="btn" id="openNodeView">Open Node View</button>
+    <button class="btn" id="addLayer">➕ Add Layer</button>
+    <button class="btn" id="groupLayers">📂 Group Selected</button>
+    <button class="btn" id="unlockAll">🔓 Unlock All</button>
+    <button class="btn" id="globalRename">✏️ Global Rename</button>
+    <button class="btn" id="smartBookmarks">⭐ Smart Bookmarks</button>
+  </div>
+</body>
+</html>

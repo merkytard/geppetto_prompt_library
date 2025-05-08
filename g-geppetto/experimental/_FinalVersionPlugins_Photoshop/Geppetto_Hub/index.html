@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Geppetto - Orchestrator</title>
+    <!-- Changed index.js to main.js -->
+    <script src="main.js"></script>
+    <style>
+        :root {
+            --bg-color: #2D2D2D;
+            --text-color: #FFFFFF;
+            --button-color: #3E3E3E;
+            --button-hover: #4A90E2;
+        }
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color); color: var(--text-color);
+        }
+        .btn {
+            background: var(--button-color); border: none; border-radius: 4px;
+            color: var(--text-color); padding: 8px 12px;
+            cursor: pointer; transition: background 0.3s, transform 0.1s;
+        }
+        .btn:hover {
+            background: var(--button-hover);
+            transform: scale(1.02);
+        }
+        .top-nav {
+            display: flex; align-items: center; justify-content: space-between;
+            background-color: #1E1E1E; padding: 10px 20px;
+        }
+        .logo {
+            font-weight: bold; color: var(--button-hover); font-size: 18px;
+        }
+        .nav-buttons button { margin-left: 10px; }
+        .container { display: flex; flex-wrap: wrap; gap: 10px; padding: 10px; }
+        .panel {
+            background-color: #3A3A3A; border-radius: 8px; padding: 10px;
+            min-height: 150px; transition: all 0.3s;
+        }
+        .panel h3 {
+            margin-top: 0; color: var(--button-hover); cursor: pointer;
+        }
+        .panel.fullscreen {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            margin: 0; border-radius: 0; z-index: 9999;
+        }
+        .content { margin-top: 10px; }
+        .preview-canvas {
+            background: #2D2D2D; border: 2px solid #4A4A4A; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            color: #888; min-height: 160px; margin-top: 10px;
+        }
+        .layers-list {
+            background: #333; border-radius: 4px; padding: 10px; margin-top: 10px;
+        }
+        .layers-list div {
+            background: #3E3E3E; border-radius: 4px; margin-bottom: 5px;
+            padding: 6px; cursor: pointer; display: flex;
+            justify-content: space-between; align-items: center;
+        }
+        .layers-list div:hover { background: var(--button-hover); }
+        .moodboard-buttons {
+            display: flex; gap: 10px; margin-bottom: 10px;
+        }
+        .artstyles {
+            display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-nav">
+  <div class="logo">Geppetto Orchestrator</div>
+  <div class="nav-buttons">
+    <button class="btn">Settings</button>
+    <button class="btn">Presets</button>
+    <button class="btn">Variants</button>
+    <button class="btn" id="toggleTheme" onclick="toggleTheme()">Toggle Theme</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="panel" id="previewPanel">
+    <h3 onclick="toggleFull('previewPanel')">Preview</h3>
+    <div class="content">
+      <button class="btn">Projekt</button>
+      <div style="margin-top:10px;">
+        <button class="btn">A</button>
+        <button class="btn">B</button>
+        <button class="btn">C</button>
+      </div>
+      <div class="preview-canvas">Canvas / Screenshot</div>
+    </div>
+  </div>
+
+  <div class="panel" id="layersPanel">
+    <h3 onclick="toggleFull('layersPanel')">Layers</h3>
+    <div class="content">
+      <div style="margin-bottom: 10px;">
+        <button class="btn">BG</button>
+        <button class="btn">Game</button>
+        <button class="btn">UI</button>
+        <button class="btn" id="unlockBtn">Unlock</button>
+        <button class="btn" id="lockBtn">Lock</button>
+      </div>
+      <div class="layers-list" id="layersList">
+        <div>Layer 1 <span>[Lock]</span></div>
+        <div>Layer 2 <span>[Unlock]</span></div>
+        <div>Layer 3 <span>[Lock]</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="moodboardPanel">
+    <h3 onclick="toggleFull('moodboardPanel')">Moodboard</h3>
+    <div class="moodboard-buttons">
+      <button class="btn">Sticky</button>
+      <button class="btn">Responsive View</button>
+      <button class="btn">Node System</button>
+    </div>
+    <div class="content">
+      <p>Insert references or notes here.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="geppettoPanel">
+    <h3 onclick="toggleFull('geppettoPanel')">Geppetto</h3>
+    <div class="content">
+      <div class="artstyles">
+        <button class="btn">Art1</button>
+        <button class="btn">Art2</button>
+        <button class="btn">Art3</button>
+        <button class="btn">Art4</button>
+        <button class="btn">Art5</button>
+      </div>
+      <div style="background:#333; border-radius:4px; height:100px; margin-bottom:10px;"></div>
+      <input type="text" placeholder="Message..." style="width:calc(100% - 90px); margin-right:10px;">
+      <button class="btn">Send</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
