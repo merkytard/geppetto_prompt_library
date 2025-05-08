@@ -1,54 +1,34 @@
 / (root)
-├── README.md
 ├── [path].ts
-├── __pycache__
-│   └── token_loader.cpython-313.pyc
+├── _index-main-git.json
+├── core
+│   └── g.py
+├── g-database
+│   └── slnx.sqlite
+├── g-deploy
+│   ├── requirements.txt
+│   ├── vercel.json
+│   └── webhook_server.py
+├── g-docs
+│   ├── README.md
+│   └── privacy.md
 ├── g-geppetto
 │   ├── archives
-│   │   ├── GEPPETTO_ULTIMATE_DEPLOY_FINAL
-│   │   │   ├── Archivon_Core_UPDATED.json
-│   │   │   ├── ZALOOP_FLOW.json
-│   │   │   ├── ZALOOP_pulse_animacia.gif
-│   │   │   ├── ZALOOP_spectrum_animacia.gif
-│   │   │   ├── ZALOOP_spectrum_with_glyphs.gif
-│   │   │   ├── archetype-002.json
-│   │   │   ├── augmented_matrix_export.json
-│   │   │   ├── avatar_manifest.json
-│   │   │   ├── bit_matrix_777.json
-│   │   │   ├── capsule_symphony_midi_generator.py
-│   │   │   ├── decision_resonator_log.json
-│   │   │   ├── echo_grid_anim.gif
-│   │   │   ├── geppetto_avatar_preview.png
-│   │   │   ├── glyph_dictionary.json
-│   │   │   ├── goal_guard.json
-│   │   │   ├── harmonia_core.json
-│   │   │   ├── historical_trace_log.json
-│   │   │   ├── idea_trace_log.json
-│   │   │   ├── memory_token_archetype-002.json
-│   │   │   ├── memory_token_index.json
-│   │   │   ├── merged_core_with_rgba_fixed.json
-│   │   │   ├── mirror_echo_grid.py
-│   │   │   └── registry_overview.json
-│   │   ├── Geppetto_OS_v1.zip
-│   │   ├── _GeppettoEgg
-│   │   │   └── geppetto_master_memory_pack.zip
-│   │   └── advanced_extract_ui
-│   │       ├── U_structure.json
-│   │       ├── advanced_extract_layout.py
-│   │       ├── advanced_extract_layout_with_lines.py
-│   │       ├── advanced_extract_ui.py
-│   │       ├── advanced_layout_structure.json
-│   │       ├── extract_ui.py
-│   │       ├── generate_html_from_json.py
-│   │       ├── generate_interactive_html.py
-│   │       ├── generated_mvp.html
-│   │       ├── generated_ui.html
-│   │       ├── index.html
-│   │       ├── input_ui.png
-│   │       ├── install_dependencies.sh
-│   │       ├── output_with_layout.png
-│   │       ├── setup_dependencies.py
-│   │       └── tesseract_config.txt
+│   │   ├── _index-archive.txt
+│   │   ├── g-4.zip
+│   │   ├── g-GEPPETTO_ULTIMATE_DEPLOY_FINAL.zip
+│   │   ├── g-GeppettoEgg.zip
+│   │   ├── g-Geppetto_CORE_ESSENTIALS.zip
+│   │   ├── g-Geppetto_OS_v1.zip
+│   │   ├── g-HomeGeppetto.zip
+│   │   ├── g-Matrix.zip
+│   │   ├── g-advanced_extract_ui.zip
+│   │   ├── geppetto_all_scripts_export.zip
+│   │   ├── geppetto_knowledge_scripts.zip
+│   │   ├── geppetto_script_index.json
+│   │   ├── geppetto_script_index_updated.json
+│   │   ├── geppetto_script_notes.md
+│   │   └── scripts_existing_knowledge.zip
 │   ├── core
 │   │   ├── g.py
 │   │   └── geppetto_commit_logger.py
@@ -170,12 +150,17 @@
 │   │       │   ├── Geppetto_Node.zip
 │   │       │   └── Geppetto_Sync.zip
 │   │       └── PluginsAndHub.zip
+│   ├── g-scripts-used
+│   │   └── geppetto_sync_engine.py
 │   ├── geppetto.json
 │   ├── geppetto_index.json
 │   ├── manifest
 │   │   └── g4_resonance_expansion_manifest.json
 │   ├── master_sync_prompts.json
 │   ├── memory
+│   │   └── bookmarks
+│   │       ├── bookmark_2025-05-08T08-54.json
+│   │       └── bookmark_index.json
 │   ├── naming
 │   │   └── g-naming-convention.yml
 │   ├── prompt_index.json
@@ -209,18 +194,40 @@
 │       ├── auto_sync_bookmarks.py
 │       ├── tick_engine.py
 │       └── tick_reflex_listener.py
-├── g-react-dependecies
 ├── g-react-libs
+│   ├── Templates
+│   │   └── Ritual
+│   │       └── CTA_RitualPort_v2.html
 │   └── geppetto.json
+├── g-scripts
+│   ├── README.md
+│   ├── g-custom-scripts_apply
+│   │   ├── GEPPETTO_CORE.py
+│   │   ├── Geppetto_InnerVoice.json
+│   │   ├── ZALOOP_core.json
+│   │   ├── auto_sync_bookmarks.py
+│   │   ├── capsule_symphony_midi_generator.py
+│   │   ├── chat_to_emotion.py
+│   │   ├── geppetto_config.json
+│   │   ├── geppetto_sky.py
+│   │   ├── geppetto_weekly_compass_generator.py
+│   │   ├── glyph_dictionary.json
+│   │   ├── linear_week_gif.py
+│   │   ├── matrix_loader.py
+│   │   ├── memory_token_archetype-002.json
+│   │   ├── memory_token_index.json
+│   │   ├── reverse_indexed_memory.json
+│   │   └── trigger_spawner.py
+│   └── geppetto_sync_engine.py
+├── g-scripts-openai
+│   └── used
+│       ├── README.md
+│       └── geppetto_knowledge_bundle.zip
 ├── generate_tree_structure.py
-├── privacy.md
+├── geppetto_index.json
 ├── push_secrets_to_github.py
 ├── react_libs
-├── requirements.txt
-├── slnx.sqlite
 ├── structure
 │   ├── generate_tree_structure.py
 │   ├── structure.txt
 │   └── structure.yml
-├── vercel.json
-└── webhook_server.py
