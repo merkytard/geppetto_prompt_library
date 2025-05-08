@@ -1,0 +1,17 @@
+# Placeholder structura ju commit files
+
+- g-geppetto/_g-core/.keep
+- g-geppetto/_g-index/.keep
+- g-geppetto/dm/.keep
+- g-geppetto/memory/.keep
+- g-geppetto/naming/.keep
+- g-geppetto/manifest/.keep
+- g-geppetto/prompts/custom_model/.keep
+- g-geppetto/tools/.keep
+- g-geppetto/archives/g-HomeGeppetto/.keep
+- g-geppetto/archives/g-Matrix/.keep
+- g-geppetto/archives/g-GeppettoEgg/.keep
+- g-react-libs/.keep
+- g-react-dependecies/.keep
+- structure/.keep
+- indexes/.keep
