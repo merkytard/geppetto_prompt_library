@@ -1,0 +1,13 @@
+{
+  "type": "bookmark_index",
+  "count": 1,
+  "bookmarks": [
+    {
+      "id": "bookmark_2025-05-08T08-54",
+      "tags": ["setup", "commit", "gpy", "structure"],
+      "timestamp": "2025-05-08T08=54-00",
+      "source": "chat",
+      "summary": "Inicializovaná\nmodulárny orchestratór : g.xy + g-syn.py. Aktivovanyš présup\n.na GitHub API & SSH. Pripravená indexovaciá a validaqná láska..."
+    }
+  ]
+}
