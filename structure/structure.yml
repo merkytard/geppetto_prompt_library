@@ -1,17 +1,71 @@
-/ (root)
-├── README.md
-├── __pycache__
-│   └── token_loader.cpython-313.pyc
-├── g-react-libs
-│   └── geppetto.json
-├── generate_tree_structure.py
-├── geppetto.json
-├── privacy.md
-├── push_secrets_to_github.py
-├── react_libs
-├── requirements.txt
-├── tools
-│   ├── auto_git_sync.py
-│   ├── tick_engine.py
-│   └── tick_reflex_listener.py
-└── webhook_server.py
+---
+structure:
+  - name: core
+    files:
+      - g.py
+      - GEPPETTO_CORE.py
+      - token_loader.py
+      - geppetto_config.json
+  - name: prompts
+    files:
+      - prompt_index.json
+      - prompts.yml
+      - prompts_full.yml
+    children:
+      - name: custom_model
+        files: ["*.json"]
+  - name: manifest
+    files:
+      - g4_resonance_expansion_manifest.json
+  - name: memory
+    files:
+      - memory_token_index.json
+      - memory_token_archetype-002.json
+      - reverse_indexed_memory.json
+      - ZALOOP_core.json
+      - Geppetto_InnerVoice.json
+  - name: naming
+    files:
+      - g-naming-convention.yml
+  - name: tools
+    files:
+      - auto_git_sync.py
+      - auto_sync_bookmarks.py
+      - tick_engine.py
+      - tick_reflex_listener.py
+      - generate_tree_structure.py
+  - name: structure
+    files:
+      - structure.yml
+      - structure.txt
+      - generate_tree_structure.py
+  - name: archives
+    files:
+      - Geppetto_OS_v1.zip
+      - GEPPETTO_ULTIMATE_DEPLOY_FINAL/
+  - name: experimental
+    files: []
+  - name: react_libs
+    files:
+      - geppetto.json
+  - name: docs
+    files:
+      - README.md
+      - privacy.md
+      - g_bookmarks_log.yml
+      - geppetto_index.json
+  - name: deploy
+    files:
+      - vercel.json
+      - webhook_server.py
+      - push_secrets_to_github.py
+  - name: database
+    files:
+      - slnx.sqlite
+  - name: config
+    files:
+      - requirements.txt
+      - [path].ts
+      - generate_tree_structure.py
+  - name: react_deps
+    files: []
