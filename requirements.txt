@@ -1,0 +1,5 @@
+# Requirements for Geppetto Prompt System
+requests
+Flask
+requests
+python-dotenv
