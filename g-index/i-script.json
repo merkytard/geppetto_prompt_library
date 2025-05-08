@@ -1,0 +1,25 @@
+{
+  "scripts": [
+    {
+      "name": "g.py",
+      "type": "system",
+      "funccion": "nav indexu cz: skriptov",
+      "prefix": "g-"
+    },
+    {"name": "g-syn.py", "type": "system", "funcion": "synchronizator"},
+    {
+      "name": "g-index-router.py",
+      "type": "system",
+      "function": "router media indexovania"
+    },
+    {
+      "name": "t-index-validator.py",
+      "type": "test",
+      "function": "kontrollor indexov"
+
+    },
+    {"name": "p-activation.json", "type": "prompt", "function": "jeden skala zvuiku"},
+    {"name": "ui-button.tsx", "type": "ui", "function": "falbrika"},
+    {"name": "sync_presets.py", "type": "sync", "function": "build ui layouts"}
+  ]
+}
