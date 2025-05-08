@@ -4,19 +4,49 @@
     "auto_sync_bookmarks.py",
     "capsule_symphony_midi_generator.py",
     "chat_to_emotion.py",
-    "chat_to_emotion.py",
     "geppetto_config.json",
     "geppetto_index.json",
     "giphx_dictionary.json",
     "g.py",
     "linear_week_gif_py.py",
     "matrix_loader.py",
+    "geppetto_sky.py",
+    "reverse_indexed_memory.json",
+    "trigger_spawner.py",
+    "geppetto_weekly_compass_generator.py",
+    "memory_token_archetype-002.json",
+    "glyph_dictionary.json",
+    "memory_token_index.json",
+    "token_loader.py",
+    "prompt_index.json",
+    "structure.yml"
+  ],
+  "knowledge_scripts": [
+    "chat_to_emotion.py",
+    "capsule_symphony_midi_generator.py",
+    "geppetto_config.json",
+    "glyph_dictionary.json",
     "memory_token_archetype-002.json",
     "memory_token_index.json",
-    "prompt_index.json",
     "reverse_indexed_memory.json",
-    "structure.yml",
     "token_loader.py",
-    "trigger_spawner.py"
-  ]
+    "matrix_loader.py",
+    "GEPPETTO_CORE.py",
+    "g.json"
+  ],
+  "g4_experimental": [
+    "g4_check_status.json",
+    "g4_heuristic-map.json",
+    "g4_reason-layer.json",
+    "tag_runtime_engine.py",
+    "g4_reflex-book.json",
+    "g4_core-engine.json",
+    "g4_tone-crafter.json",
+    "g4_ux-formatter.json",
+    "g4_longterm-memory.json"
+  ],
+  "only_in_all": [
+    "auto_sync_bookmarks.py"
+  ],
+  "shared_all": []
 }
