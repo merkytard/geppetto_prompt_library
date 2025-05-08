@@ -1,0 +1,6 @@
+prompts:
+  - geppetto_workflow
+  - dynamic_layer_engine
+  - pulse_tick_manager
+  - extended_prompt_management
+  - action_bridge

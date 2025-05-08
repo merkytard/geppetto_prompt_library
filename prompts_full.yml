@@ -1,0 +1,6 @@
+prompts_full:
+  - geppetto_workflow: https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/geppetto_workflow.json
+  - dynamic_layer_engine: https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/dynamic_layer_engine.json
+  - pulse_tick_manager: https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/pulse_tick_manager.json
+  - extended_prompt_management: https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/extended_prompt_management.json
+  - action_bridge: https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/action_bridge.json

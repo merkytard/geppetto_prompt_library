@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/github/repos/merkytard/geppetto_prompt_library/contents/(.*)",
+      "dest": "/api/github/$1"
+    }
+  ]
+}

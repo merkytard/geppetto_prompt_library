@@ -1,0 +1,9 @@
+{
+  "sync_targets": [
+    "https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/geppetto_workflow.json",
+    "https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/dynamic_layer_engine.json",
+    "https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/pulse_tick_manager.json",
+    "https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/extended_prompt_management.json",
+    "https://raw.githubusercontent.com/merkytard/geppetto_prompt_library/main/prompts/custom_model/action_bridge.json"
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "prompts": [
+    {
+      "name": "Orchestrator",
+      "tags": [
+        "system",
+        "navigation",
+        "restart"
+      ],
+      "file": "prompts/custom_model/orchestrator.json"
+    },
+    {
+      "name": "Bookmarks",
+      "tags": [
+        "notes",
+        "capture",
+        "documentation"
+      ],
+      "file": "prompts/custom_model/bookmarks.json"
+    },
+    {
+      "name": "Triangel",
+      "tags": [
+        "balance",
+        "design",
+        "efficiency"
+      ],
+      "file": "prompts/custom_model/triangel.json"
+    },
+    {
+      "name": "Aktivácia Zámeru",
+      "tags": [
+        "zamer",
+        "aktivacia",
+        "novy_start"
+      ],
+      "file": "prompts/custom_model/aktivácia_zámeru.json"
+    },
+    {
+      "name": "Nový impulz",
+      "tags": [
+        "tvorba",
+        "energia",
+        "novy_pohyb"
+      ],
+      "file": "prompts/custom_model/nový_impulz.json"
+    },
+    {
+      "name": "Vnútorná reflexia",
+      "tags": [
+        "reflexia",
+        "sebaotázky",
+        "stav"
+      ],
+      "file": "prompts/custom_model/vnútorná_reflexia.json"
+    },
+    {
+      "name": "Deštruktívne vzory",
+      "tags": [
+        "cistenie",
+        "bloky",
+        "zmena"
+      ],
+      "file": "prompts/custom_model/deštruktívne_vzory.json"
+    },
+    {
+      "name": "Pulz zámeru",
+      "tags": [
+        "ritmus",
+        "aktivacia",
+        "zamer"
+      ],
+      "file": "prompts/custom_model/pulz_zámeru.json"
+    },
+    {
+      "name": "Synchronizácia vrstiev",
+      "tags": [
+        "synchronizacia",
+        "flow",
+        "spojenie"
+      ],
+      "file": "prompts/custom_model/synchronizácia_vrstiev.json"
+    },
+    {
+      "name": "Archetyp snov",
+      "tags": [
+        "archetyp",
+        "vizia",
+        "tvorba"
+      ],
+      "file": "prompts/custom_model/archetyp_snov.json"
+    },
+    {
+      "name": "Explózia možností",
+      "tags": [
+        "moznosti",
+        "tvorivost",
+        "expand"
+      ],
+      "file": "prompts/custom_model/explózia_možností.json"
+    },
+    {
+      "name": "Most medzi svetmi",
+      "tags": [
+        "most",
+        "svety",
+        "spojenie"
+      ],
+      "file": "prompts/custom_model/most_medzi_svetmi.json"
+    },
+    {
+      "name": "Jazyk emócií",
+      "tags": [
+        "emocie",
+        "symbolika",
+        "jazyk"
+      ],
+      "file": "prompts/custom_model/jazyk_emócií.json"
+    }
+  ]
+}
