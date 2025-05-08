@@ -1,0 +1,63 @@
+{
+  "dictionary_name": "glyph_dictionary",
+  "version": "1.0",
+  "glyphs": [
+    {
+      "symbol": "●",
+      "name": "Základný bod",
+      "emotion": "neutral",
+      "resonance": "anchor",
+      "color_hint": "gray"
+    },
+    {
+      "symbol": "↺",
+      "name": "Cyklický pohyb",
+      "emotion": "flow",
+      "resonance": "loop",
+      "color_hint": "blue-green"
+    },
+    {
+      "symbol": "✧",
+      "name": "Iskrivý impulz",
+      "emotion": "curiosity",
+      "resonance": "spark",
+      "color_hint": "aqua"
+    },
+    {
+      "symbol": "☀️",
+      "name": "Aktívny uzol",
+      "emotion": "activation",
+      "resonance": "focus",
+      "color_hint": "yellow"
+    },
+    {
+      "symbol": "❄️",
+      "name": "Spomalenie",
+      "emotion": "contemplation",
+      "resonance": "freeze",
+      "color_hint": "light-blue"
+    },
+    {
+      "symbol": "✴️",
+      "name": "Rozvetvenie",
+      "emotion": "tension",
+      "resonance": "split",
+      "color_hint": "orange"
+    },
+    {
+      "symbol": "🌕",
+      "name": "Celistvosť",
+      "emotion": "completion",
+      "resonance": "harmonic",
+      "color_hint": "white"
+    },
+    {
+      "symbol": "⬛",
+      "name": "Neaktivovaná zóna",
+      "emotion": "hidden",
+      "resonance": "void",
+      "color_hint": "black"
+    }
+  ],
+  "last_updated": "2025-04-17T14:43:53.517927"
+}

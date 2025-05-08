@@ -1,0 +1,6 @@
+{
+  "memory_token": "geppetto://memory/archetype-002",
+  "signature": "SYNF-RGB-ECHO",
+  "intent": "color_music_core",
+  "linked_archetype": "archetype-002"
+}

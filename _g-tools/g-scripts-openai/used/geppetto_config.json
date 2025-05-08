@@ -1,0 +1,13 @@
+{
+    "colors": ["#1E90FF", "#2E8B57", "#FFD700", "#FF8C00", "#FF0000", "#9400D3", "#FFFFFF"],
+    "symbols": {
+        "radost": "☀",
+        "smutok": "🌧",
+        "hnev": "⚡",
+        "pokoj": "☁",
+        "laska": "❤",
+        "strach": "👁",
+        "prekvapenie": "✨"
+    },
+    "autoload": true
+}

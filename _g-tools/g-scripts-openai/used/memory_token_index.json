@@ -1,0 +1,20 @@
+{
+  "registry": "memory_token_index",
+  "version": "1.0",
+  "index": [
+    {
+      "id": "archetype-002",
+      "token": "geppetto://memory/archetype-002",
+      "signature": "SYNF-RGB-ECHO",
+      "intent": "color_music_core",
+      "linked_files": [
+        "bit_matrix_777.json",
+        "glyph_dictionary.json",
+        "capsule_symphony_midi_generator.py",
+        "ZALOOP_spectrum_with_glyphs.gif"
+      ],
+      "status": "active"
+    }
+  ],
+  "last_updated": "2025-04-17T14:51:15.837252"
+}
