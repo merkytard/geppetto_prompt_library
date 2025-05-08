@@ -10,6 +10,11 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b 1
 )
 
+:: 🗃️ Vytvorenie priečinka na ZIP ak neexistuje
+if not exist _a-archives\a-archives\a-archive-sources-zip (
+    mkdir _a-archives\a-archives\a-archive-sources-zip
+)
+
 :: 🗃️ Vytvorenie snapshot ZIP
 set SNAPNAME=geppetto_snapshot_%DATE:/=-%_%TIME::=-%.zip
 set SNAPNAME=%SNAPNAME: =%
