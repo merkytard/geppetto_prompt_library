@@ -1,0 +1,45 @@
+{
+  "core": {
+    "g.py": "Orchestrátor systému – spúšťače, synchronizácia, git push",
+    "GEPPETTO_CORE.py": "Hlavná logika Geppetta – decision engine / task layer",
+    "token_loader.py": "Načítanie GITHUB_TOKEN pre API komunikáciu",
+    "geppetto_config.json": "Konfiguračný súbor systému"
+  },
+  "memory": {
+    "memory_token_index.json": "Index pamäťových tokenov",
+    "memory_token_archetype-002.json": "Archetypy pamäte",
+    "reverse_indexed_memory.json": "Reverzná pamäťová mapa",
+    "ZALOOP_core.json": "Základ slučkovej pamäte (ZALOOP)",
+    "Geppetto_InnerVoice.json": "Introspektívny hlas a vnútorné reakcie"
+  },
+  "react_libs": {
+    "g-react-libs/geppetto.json": "Definícia hlavnej React knižnice (UI frontend hooks)"
+  },
+  "tools": {
+    "generate_tree_structure.py": "Generovanie štruktúry adresára ako strom",
+    "trigger_spawner.py": "Spúšťač udalostí alebo kreatívnych vĺn",
+    "matrix_loader.py": "Načítavanie maticových vstupov / dát",
+    "auto_git_sync.py": "Automatický commit & push",
+    "tick_engine.py": "Časové spúšťanie, impulzy"
+  },
+  "creative": {
+    "linear_week_gif.py": "Vizuálne vykreslenie týždenného cyklu (GIF)",
+    "capsule_symphony_midi_generator.py": "Generovanie MIDI hudobných kapsúl",
+    "geppetto_weekly_compass_generator.py": "Symbolický týždenný kompas / navigácia"
+  },
+  "experimental": {
+    "chat_to_emotion.py": "Prevod chat vstupu na emocionálne stopy",
+    "loop_engine.py": "Experimentálny slučkový engine (pravdepodobne nahradený)"
+  },
+  "other": {
+    "glyph_dictionary.json": "Slovník symbolov / znakov pre generovanie alebo UI",
+    "GEPPETTO_ULTIMATE_DEPLOY_FINAL (2).zip": "Finalizovaný export celého systému",
+    "Geppetto_OS_v1.zip": "Predošlá verzia systému"
+  },
+  "tree": {
+    "structure.txt",
+    "structure.yml": "Finalizovaný export celého systému",
+    "Geppetto_OS_v1.zip": "Predošlá verzia systému"
+  }
+}
+         
