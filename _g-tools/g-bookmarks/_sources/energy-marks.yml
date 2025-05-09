@@ -1,4 +1,11 @@
-∺: "nové modul, iteracia, expanzia"
-«å:  "zásah, íprava, okamziá zlepsíe"
-20◐:  "vizuálny doplnok, animuácie, UX"
-¤¶:  "ástenie, útlm, archivaácia"
+--- TODO [Geppetto] AutoDeployIndexPipeline
+- file: auto_indexer_scaffold.py
+  prefix: core_
+  layer: core_engine
+  author: geppetto
+  status: incomplete
+  timestamp: 2025-05-09T12:00:00Z
+  notes: |
+    - Kreate scaffold s rovnou modulmi: auto_indexer.py, prefix_classifier.py, index_router.py, document_writer.py, validator.py
+    - Vywola prepinanu prefix_map.json, gefficient layer/file routing a time.
+    - Nastavit to sobor commit a splushou toolboo.
