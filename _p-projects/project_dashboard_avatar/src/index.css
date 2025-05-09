@@ -1,0 +1,279 @@
+
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+    /* ==========================================================================
+       Base Styles & Theme Variables
+       ========================================================================== */
+    @layer base {
+      :root {
+        /* --- Light Theme --- */
+        --background: 220 13% 97%;
+        --foreground: 220 9% 10%;
+        --card: 0 0% 100%;
+        --card-foreground: 220 9% 10%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 220 9% 10%;
+        --primary: 217 91% 60%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 222.2 47.4% 11.2%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215 16% 47%;
+        --accent: 210 40% 98%;
+        --accent-foreground: 222.2 47.4% 11.2%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 214 20% 85%;
+        --input: 214 20% 85%;
+        --ring: 217 91% 70%;
+        --radius: 0.5rem;
+
+        /* Theme Specific */
+        --gold: 35 92% 58%;
+        --gold-foreground: 20 14% 4%;
+        --gold-hover: 38 95% 65%;
+        --blue-gradient-from: 220 90% 65%;
+        --blue-gradient-to: 200 95% 55%;
+
+        /* NodeBase specific */
+        --node-bg-light: 220 15% 95% / 0.9;
+        --node-text-light: 220 9% 10%;
+        --flow-bg-light: 220 13% 97%;
+        --flow-dot-light: 214 20% 88%;
+
+        /* Bubble Colors Light */
+        --bubble-bg-blue-light: 210 100% 96%;
+        --bubble-text-blue-light: 221 83% 53%;
+        --bubble-bg-green-light: 145 90% 96%;
+        --bubble-text-green-light: 142 76% 36%;
+        --bubble-bg-yellow-light: 48 96% 96%;
+        --bubble-text-yellow-light: 38 92% 50%;
+        --bubble-bg-purple-light: 262 85% 98%;
+        --bubble-text-purple-light: 262 80% 50%;
+        --bubble-bg-pink-light: 335 90% 98%;
+        --bubble-text-pink-light: 335 85% 55%;
+
+        /* Stat Colors */
+        --stat-level: 255 193 7; /* Yellow */
+        --stat-xp: 33 150 243; /* Blue */
+        --stat-happiness: 239 83 80; /* Red */
+        --stat-energy: 76 175 80; /* Green */
+      }
+
+      .dark {
+        /* --- Dark Theme --- */
+        --background: 220 10% 10%;
+        --foreground: 210 40% 98%;
+        --card: 220 10% 13%;
+        --card-foreground: 210 40% 98%;
+        --popover: 220 10% 10%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 217 91% 65%;
+        --primary-foreground: 210 40% 9.8%;
+        --secondary: 217 19% 27%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 217 19% 27%;
+        --muted-foreground: 215 20% 65%;
+        --accent: 217 19% 27%;
+        --accent-foreground: 210 40% 98%;
+        --destructive: 0 63% 50%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 217 10% 25%;
+        --input: 217 10% 25%;
+        --ring: 217 91% 75%;
+
+        /* Theme Specific */
+        --gold: 38 95% 65%;
+        --gold-foreground: 20 14% 4%;
+        --gold-hover: 40 98% 70%;
+        --blue-gradient-from: 220 90% 70%;
+        --blue-gradient-to: 200 95% 60%;
+
+        /* NodeBase specific */
+        --node-bg-dark: 220 10% 15% / 0.9;
+        --node-text-dark: 210 40% 98%;
+        --flow-bg-dark: 220 10% 10%;
+        --flow-dot-dark: 217 10% 22%;
+
+        /* Bubble Colors Dark */
+        --bubble-bg-blue-dark: 215 28% 17%;
+        --bubble-text-blue-dark: 210 100% 85%;
+        --bubble-bg-green-dark: 147 38% 16%;
+        --bubble-text-green-dark: 140 80% 75%;
+        --bubble-bg-yellow-dark: 48 30% 15%;
+        --bubble-text-yellow-dark: 48 90% 70%;
+        --bubble-bg-purple-dark: 263 30% 18%;
+        --bubble-text-purple-dark: 260 90% 85%;
+        --bubble-bg-pink-dark: 330 35% 17%;
+        --bubble-text-pink-dark: 330 90% 85%;
+
+        /* Stat Colors */
+        --stat-level: 255 193 7; /* Yellow */
+        --stat-xp: 33 150 243; /* Blue */
+        --stat-happiness: 239 83 80; /* Red */
+        --stat-energy: 76 175 80; /* Green */
+      }
+    }
+
+    /* ==========================================================================
+       Global Styles
+       ========================================================================== */
+    @layer base {
+      * {
+        @apply border-border;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      }
+      html {
+        @apply h-full;
+      }
+      body {
+        @apply bg-background text-foreground h-full min-h-screen flex flex-col;
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+       body {
+           background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)/0.5) 100%);
+       }
+       .dark body {
+           background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)/0.3) 100%);
+       }
+       #root {
+         @apply flex flex-col flex-grow h-full;
+       }
+    }
+
+    /* ==========================================================================
+       Utility Styles (Scrollbar, Buttons, Animations)
+       ========================================================================== */
+    /* --- Custom Scrollbar --- */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: hsl(var(--muted) / 0.3); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: hsl(var(--primary) / 0.5); border-radius: 3px; transition: background-color 0.2s ease; }
+    ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.7); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none;  scrollbar-width: none; }
+
+
+    /* --- Pulsating Gold Button --- */
+    .gold-button {
+       @apply bg-gold text-gold-foreground hover:bg-gold-hover focus-visible:ring-gold;
+       position: relative; overflow: hidden;
+       transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    }
+    .gold-button::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle, hsl(var(--gold-hover) / 0.5) 0%, transparent 70%);
+      opacity: 0; transform: scale(0);
+      transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+      pointer-events: none; border-radius: inherit;
+    }
+    .gold-button:hover::before, .gold-button:focus-visible::before { transform: scale(2.5); opacity: 1; }
+    .gold-button:active { animation: button-press 0.2s ease-in-out; box-shadow: 0 0 5px hsl(var(--gold) / 0.6), 0 0 10px hsl(var(--gold) / 0.3); }
+    @keyframes button-press { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.98); } }
+
+    /* --- Pulse Animations --- */
+    .animate-pulse-slow { animation: pulse-slow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .6; }
+    }
+    .animate-pulse-fast { animation: pulse-fast 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes pulse-fast {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .5; }
+    }
+
+
+    /* ==========================================================================
+       Component Styles: Kanban
+       ========================================================================== */
+    .kanban-column { @apply bg-card rounded-lg shadow-sm border flex flex-col min-h-[300px] sm:min-h-[400px] md:min-h-[500px] w-full sm:w-[280px] md:w-[300px] max-w-full flex-shrink-0; }
+    .kanban-card { @apply rounded-md shadow-sm p-2 sm:p-3 mb-2 cursor-grab border text-xs sm:text-sm; }
+    .kanban-card:hover { @apply shadow-md ring-1 ring-primary/30; }
+    .column-header { @apply flex items-center justify-between p-2 sm:p-3 border-b cursor-grab bg-secondary/50 rounded-t-lg; }
+    .column-title { @apply font-medium text-xs sm:text-sm md:text-base select-none text-secondary-foreground; }
+    .column-content { @apply p-1 sm:p-2 flex-grow overflow-y-auto; }
+    .add-card-button { @apply w-full flex items-center justify-center p-2 mt-2 rounded-md text-muted-foreground hover:bg-primary/5 hover:text-primary transition-colors text-xs sm:text-sm; }
+    .add-column-button { @apply flex items-center justify-center p-3 rounded-lg border-2 border-dashed border-border hover:border-primary/50 text-muted-foreground hover:text-primary transition-colors min-w-[250px] sm:min-w-[280px] md:min-w-[300px] h-[60px] sm:h-[80px] flex-shrink-0; }
+
+    /* ==========================================================================
+       Component Styles: React Flow / NodeBase
+       ========================================================================== */
+    .react-flow__edge-path { stroke: hsl(var(--primary) / 0.7); stroke-width: 1.5; }
+    .react-flow__edge.animated path { stroke-dasharray: 5; animation: dashdraw .5s linear infinite; }
+    @keyframes dashdraw { from { stroke-dashoffset: 10; } }
+
+    .react-flow__background { background-color: hsl(var(--flow-bg-light)); }
+    .dark .react-flow__background { background-color: hsl(var(--flow-bg-dark)); }
+    .react-flow__background.dots path { fill: hsl(var(--flow-dot-light)); }
+    .dark .react-flow__background.dots path { fill: hsl(var(--flow-dot-dark)); }
+
+    .react-flow__attribution { @apply text-xs !bg-transparent !text-muted-foreground/50 hidden sm:block; }
+
+     .node-base-node {
+       background-color: hsla(var(--node-bg-light));
+       color: hsl(var(--node-text-light));
+       @apply border rounded shadow-md backdrop-blur-sm text-xs sm:text-sm;
+     }
+     .dark .node-base-node {
+       background-color: hsla(var(--node-bg-dark));
+       color: hsl(var(--node-text-dark));
+       @apply border-border;
+     }
+     .node-base-node.selected { @apply border-primary ring-2 ring-primary/50; }
+
+     .node-text-bubble { @apply p-1.5 sm:p-2 rounded text-xs sm:text-sm; }
+
+     .bg-blue-100 .node-text-bubble { background-color: hsl(var(--bubble-bg-blue-light)); color: hsl(var(--bubble-text-blue-light)); }
+     .bg-green-100 .node-text-bubble { background-color: hsl(var(--bubble-bg-green-light)); color: hsl(var(--bubble-text-green-light)); }
+     .bg-yellow-100 .node-text-bubble { background-color: hsl(var(--bubble-bg-yellow-light)); color: hsl(var(--bubble-text-yellow-light)); }
+     .bg-purple-100 .node-text-bubble { background-color: hsl(var(--bubble-bg-purple-light)); color: hsl(var(--bubble-text-purple-light)); }
+     .bg-pink-100 .node-text-bubble { background-color: hsl(var(--bubble-bg-pink-light)); color: hsl(var(--bubble-text-pink-light)); }
+     .bg-background .node-text-bubble { background-color: hsl(var(--card)); color: hsl(var(--card-foreground)); } 
+
+     .dark .bg-blue-100 .node-text-bubble,
+     .dark .dark\:bg-blue-900\/30 .node-text-bubble { background-color: hsl(var(--bubble-bg-blue-dark)); color: hsl(var(--bubble-text-blue-dark)); }
+     .dark .bg-green-100 .node-text-bubble,
+     .dark .dark\:bg-green-900\/30 .node-text-bubble { background-color: hsl(var(--bubble-bg-green-dark)); color: hsl(var(--bubble-text-green-dark)); }
+     .dark .bg-yellow-100 .node-text-bubble,
+     .dark .dark\:bg-yellow-900\/30 .node-text-bubble { background-color: hsl(var(--bubble-bg-yellow-dark)); color: hsl(var(--bubble-text-yellow-dark)); }
+     .dark .bg-purple-100 .node-text-bubble,
+     .dark .dark\:bg-purple-900\/30 .node-text-bubble { background-color: hsl(var(--bubble-bg-purple-dark)); color: hsl(var(--bubble-text-purple-dark)); }
+     .dark .bg-pink-100 .node-text-bubble,
+     .dark .dark\:bg-pink-900\/30 .node-text-bubble { background-color: hsl(var(--bubble-bg-pink-dark)); color: hsl(var(--bubble-text-pink-dark)); }
+     .dark .bg-background .node-text-bubble { background-color: hsl(var(--card)); color: hsl(var(--card-foreground)); }
+
+    /* --- Jira Stat Bars --- */
+    .stat-bar { @apply relative h-2 sm:h-2.5 w-full overflow-hidden rounded-full bg-secondary; }
+    .stat-bar-indicator { @apply h-full w-full flex-1 transition-all; }
+    .stat-bar-indicator-level { background-color: rgb(var(--stat-level)); }
+    .stat-bar-indicator-xp { background-color: rgb(var(--stat-xp)); }
+    .stat-bar-indicator-happiness { background-color: rgb(var(--stat-happiness)); }
+    .stat-bar-indicator-energy { background-color: rgb(var(--stat-energy)); }
+
+    /* Responsive text sizes for better mobile readability */
+    @media (max-width: 768px) {
+      h1, .h1 { @apply text-2xl; }
+      h2, .h2 { @apply text-xl; }
+      h3, .h3 { @apply text-lg; }
+      p, span, div, li, a, button, input, select, textarea { @apply text-sm; }
+      .text-xs { @apply text-[0.65rem] leading-tight; }
+    }
+    .reactflow-wrapper { touch-action: none; }
+
+    /* Add this for calendar pulse on today's date */
+    .rdp-day_today:not(.rdp-day_outside) {
+      animation: pulse-calendar-today 2s infinite;
+    }
+    @keyframes pulse-calendar-today {
+      0% { box-shadow: 0 0 0 0 hsl(var(--accent-foreground) / 0.3); }
+      70% { box-shadow: 0 0 0 6px hsl(var(--accent-foreground) / 0); }
+      100% { box-shadow: 0 0 0 0 hsl(var(--accent-foreground) / 0); }
+    }
+  
