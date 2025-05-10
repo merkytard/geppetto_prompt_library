@@ -1,0 +1,7 @@
+# BIT Konfiguraáca
+created: 2025-05-10T18:37:24.844133
+components:
+  - dashboard
+  - hooks
+  - nodes
+  - agentmap
