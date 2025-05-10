@@ -1,0 +1,24 @@
+id: gpt_builder
+name: GPT Builder
+description: Interaktívny nástroj pre tvorbu vlastných GPT pomocou konverzácie.
+fields:
+  - name: meno GPT
+  - context: popis prostredia a úlohy
+  - description: zhrnutie funkcionality
+  - prompt_starters: typické vstupy
+  - abilities: schopnosti (napr. tool usage)
+  - profile_pic_file_id: referenčný obrázok
+steps:
+  - initial_goal_definition
+  - name_confirmation
+  - generate_profile_pic
+  - context_iteration:
+      - purpose
+      - avoidance
+      - behavior_guides
+      - clarification
+      - tone_and_voice
+  - finalization_and_test
+actions:
+  - generate_profile_pic
+  - update_behavior

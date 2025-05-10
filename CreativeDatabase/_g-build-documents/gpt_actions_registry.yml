@@ -1,0 +1,22 @@
+actions:
+  - name: query_salesforce
+    type: api_call
+    endpoint: https://salesforce.com/api/query
+    method: POST
+    headers:
+      Authorization: Bearer {{token}}
+    payload_schema:
+      type: object
+      properties:
+        query: { type: string }
+
+  - name: trigger_gong_recording
+    type: api_call
+    endpoint: https://api.gong.io/v1/start_recording
+    method: POST
+    headers:
+      Authorization: Bearer {{gong_api_token}}
+    payload_schema:
+      type: object
+      properties:
+        meeting_id: { type: string }

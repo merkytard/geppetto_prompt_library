@@ -1,0 +1,36 @@
+# CreativeDatabase/index.yml – Základná štruktúra databázy pre tím GPT agentov
+version: 1.0
+project: Geppetto Collective Agents
+root_folder: CreativeDatabase
+
+shared_memory:
+  - name: behavior_vectors.jsonl
+    description: "Zdieľané behaviorálne odtlačky a reflexie."
+  - name: mirror_log.jsonl
+    description: "Globálny zrkadlový zápis akcií všetkých agentov."
+  - name: decision_proxy_log.jsonl
+    description: "Záznam rozhodnutí validovaných Finalizerom."
+  - name: creative_index.json
+    description: "Mapa tvorivých výstupov."
+
+interface:
+  - module: creative_dashboard.py
+    description: "Zobrazenie stavu všetkých agentov a ich aktivít."
+  - module: memory_explorer.py
+    description: "Prehliadač pamätí jednotlivých agentov."
+  - module: chat_aggregator.py
+    description: "Zjednotený výpis všetkých rozhovorov."
+
+agents:
+  path: CreativeDatabase/agents/
+  description: "Každý agent má vlastnú pamäť, identitu, reflexie a špecifikáciu."
+
+folder_structure:
+  - CreativeDatabase/
+    - index.yml
+    - mirror_log.jsonl
+    - behavior_vectors.jsonl
+    - decision_proxy_log.jsonl
+    - agents/
+        - archivon/
+        - merkytard/

@@ -1,0 +1,508 @@
+ 
+Geppetto Toolchain – Špecifikácia (Archivon Orchestration Layer)
+Úvod
+Geppetto Toolchain rozširuje platformu Geppetto o orchestračnú vrstvu, ktorá spája najnovšie postupy práce s GPT-4.1 a integruje externé nástroje pre získavanie znalostí a vykonávanie akcií. Cieľom je vytvoriť produkčný toolchain umožňujúci inteligentné využitie Retrieval-Augmented Generation (RAG) aj GPT Actions v rámci jedného asistenta. V tomto dokumente integrujeme best practices z OpenAI Cookbook a definujeme architektúru, moduly a kód potrebný pre robustnú orchestráciu.
+
+Hlavné vylepšenia a postupy:
+
+GPT-4.1 Prompting Guide: V systéme definujeme jasnú rolu asistenta (Geppetto ako “tool-using assistant”), pridávame štruktúrované príklady použitia nástrojov, poskytujeme explicitné inštrukcie kedy a ako nástroje volať, a podporujeme chain-of-thought (plánovanie krok-za- krokom). Tieto techniky využívajú vylepšené schopnosti GPT-4.1 efektívne plánovať a využívať funkcie	.
+
+Orchestrácia nástrojov cez Responses API & RAG: Využívame nový OpenAI Responses API pre plynulé volanie funkcií (tools) počas konverzácie. Asistent tak môže automaticky použiť vstavané či externé nástroje na základe používateľskej požiadavky. Integrujeme Pinecone vektorovú databázu (indexovanie znalostnej bázy a generovanie embeddingov) pre semanticé vyhľadávanie kontextu k dopytom. Relevantné informácie získané z vektorového vyhľadávania sa injektujú do kontextu asistenta, čím minimalizujeme halucinácie a zvýšime presnosť odpovedí	.
+
+GPT Actions (externé akcie cez middleware): Rozhranie GPT Actions umožňuje prepojiť asistenta s externými službami (napr. Salesforce CRM a Gong záznamy hovorov) pomocou definovaných akcií. Vytvoríme schémy akcií pre tieto služby (názov akcie, parametre, návratový formát) a zaregistrujeme ich do systému tak, aby ich GPT vedel volať. Volania sú sprostredkované cez bezpečný middleware (napr. serverless funkcie) – asistent tak nemá priamy prístup k API kľúčom, ale volá definovanú akciu, ktorú backend spracuje	. Každá akcia bude otestovaná
+v izolácii aj integračne, aby sme mali istotu, že GPT dokáže správne vyvolať akciu a spracovať jej výsledok.
+
+Tento dokument popisuje rozšírenú architektúru Geppetta, obsahuje krokové inštrukcie spracovania dotazov, definuje nové akcie a nástroje, uvádza ukážky kódových modulov a vysvetľuje integráciu týchto komponentov do systému. Dokument je pripravený v produkčnej kvalite, v súlade s konvenciami Geppetta (štruktúra sekcií, značky, timestampy a archivon kompatibilita). Výsledkom je jeden súhrnný špecifikačný súbor („Geppetto Toolchain Spec“), ktorý slúži ako blueprint pre implementáciu aj ďalšie rozširovanie systému.
+
+Rozšírená architektúra orchestrácie
+Nová vrstva orchestrácie nástrojov v Geppettovi zavádza komponenty, ktoré umožňujú dynamicky routovať požiadavky používateľa na interné vyhľadávanie informácií alebo externé akcie. Architektúra zachováva konverzačný framework (LLM chat model) a pridáva k nemu tieto prvky:
+
+System Prompt s definíciou nástrojov: Systémové inštrukcie pre GPT-4.1 teraz obsahujú definície dostupných nástrojov/funkcií. Každý nástroj má špecifikovaný názov, popis a štruktúru volania (schema). Asistent vie, že môže tieto nástroje využiť namiesto priamej odpovede, ak je to potrebné. Prompt tiež zahŕňa pripomienky k úlohe asistenta, napr. aby najprv zvážil potrebu nástroja pred odpoveďou a aby premýšľal krokovo (tzv. chain-of-thought plánovanie)  . V
+system message uvádzame aj príkladové interakcie v sekcii	, ktoré demonštrujú,
+kedy použiť napr. vyhľadávanie v znalostnej báze alebo zavolať externú akciu – tým model dostane jasný vzor správania	.
+
+Registry nástrojov a akcií: V backende je zavedený register nástrojov – centrálna štruktúra/ mapa, ktorá eviduje všetky dostupné nástroje a GPT akcie. Každá položka obsahuje unikátny identifikátor alebo názov, referenciu na handler (funkciu/metódu) a prípadné metadata (napr. či ide o interný tool alebo externú akciu cez API). Register umožňuje jednoducho pridávať alebo odoberať nástroje bez zásahu do logiky modelu – stačí aktualizovať zoznam a príslušné popisy v systémovom promte.
+
+Orchestrátor a routing požiadaviek: Hlavný orchestrátor (súčasť Geppetto pipeline) sprostredkuje komunikáciu medzi modelom a nástrojmi. Handler routing zabezpečuje, že ak
+
+GPT vygeneruje volanie funkcie (napr. nasmeruje na správny handler:
+cez Responses API), systém ho zachytí a
+
+
+Pre interné vyhľadávanie (RAG) je handler, ktorý zavolá modul pre vektorové vyhľadávanie (Pinecone).
+Pre externé GPT akcie (Salesforce, Gong) je handler, ktorý cez middleware vykoná príslušnú akciu.
+Orchestrátor taktiež rozhodne o postupe: napríklad ak dotaz vyžaduje najprv vyhľadanie kontextu a potom externú akciu, proces môže zahŕňať viacero volaní nástrojov sekvenčne. Architektúra podporuje multi-step interakcie, kde asistent môže postupne volať viac nástrojov (s plánovaním medzi krokmi), pričom orchestrátor každé volanie spracuje a odovzdá modelu výsledky, aby mohol pokračovať.
+
+Vektorová databáza & kontextový modul: Integrácia Pinecone umožňuje ukladať interné znalosti (dokumenty, poznámky, historické dáta) vo forme vektorových embeddingov a rýchlo ich vyhľadávať na základe podobnosti. Nový modul QueryContextEngine sa stará o:
+
+Indexovanie znalostí: offline alebo na backgrounde vie prijímať nové dokumenty a ukladať ich do Pinecone indexu (pomocou embedding modelu GPT-4.1 alebo iného).
+Dopytovanie vektorov: na základe používateľskej otázky vygeneruje embedding dotazu a nájde top relevantné pasáže/údaje.
+Návrat kontextu: získané výsledky (napr. textové úryvky) formátuje do podoby vhodnej pre prompt (môže ich spojiť do jedného reťazca alebo ako bullet-pointy) a odovzdá orchestrátoru.
+Tento modul sa volá buď automaticky pri každom dotaze (pre-obohatenie kontextu), alebo
+dynamicky len ak model o to požiada volaním funkcie (napr.	). V praxi
+
+využijeme kombináciu – model je v systémových inštrukciách navádzaný, aby použil vyhľadávací nástroj, keď nemá dostatok informácií.
+
+Integrácia externých akcií: Pre každú externú službu definujeme GPT Action, ktorá predstavuje konkrétnu operáciu (napr. vyhľadanie zákazníka v Salesforce podľa mena, alebo získanie prepisu hovoru z Gong podľa ID záznamu). Tieto akcie sú implementované cez middleware – napríklad serverless funkcia v AWS/Azure/GCP, ktorá prijíma požiadavku od GPT (cez náš backend) a vykoná volanie na externé API. Architektúra predpokladá nasledujúce kroky integrácie:
+
+
+Vytvorenie samotnej akcie v middleware (napr. endpoint Gong API).
+Definovanie action schema pre GPT: čo akcia robí, aké argumenty vyžaduje (napr.
+volajúci
+
+
+poľami).
+alebo
+), a aký formát výsledku vracia (napr. text prepisu alebo JSON s
+
+Registrácia akcie v systéme: zahrnutie popisu a schémy do system promptu alebo ako súčasť
+volania OpenAI API (napr. v poli	v ChatCompletion). Tým model vie, že existuje
+
+funkcia s daným menom a bude ju vedieť zavolať.
+Handler v ActionDispatcher: V našom kóde modul
+
+obsahuje logiku,
+
+ktorá prijme volanie akcie od modelu, spojí sa s príslušným middleware (napr. cez HTTP request s potrebnými parametrami) a vráti výsledok.
+Po obdržaní výsledku orchestrátor vloží výsledok naspäť do kontextu konverzácie (ako odpoveď funkcie), a model následne dokončí odpoveď pre užívateľa s využitím získaných dát.
+
+Správa akcií a bezpečnosti: Orchestrácia zahŕňa aj management vrstvy pre akcie, ktorá dohliada na bezpečné a korektné vykonanie:
+
+Každé volanie akcie môže byť logované s timestampom, volanými parametrami a stavom (úspech/zlyhanie) pre audit a debug.
+Systém môže mať definované obmedzenia, napr. limit počtu volaní externých API v rámci jedného dotazu, alebo potrebu explicitného súhlasu používateľa pred "zápisovými" akciami (napr. ak by existovala akcia na zápis do Salesforce, musí ju užívateľ potvrdiť).
+Chybové stavy (timeout API, nedostupnosť služby) sú ošetrené – ak akcia zlyhá, handler vráti
+modelu informáciu o zlyhaní a model buď skúsi alternatívu alebo slušne oznámi užívateľovi, že danú akciu nemožno vykonať.
+Žiadna priama expozícia citlivých údajov modelu: GPT vidí len výsledok volania (napr. "Company
+X má rating A"), ale nedostane napr. priamo API kľúč alebo nepotrebné surové dáta. Systém prompt tiež obsahuje upozornenie, aby model nevypisoval interné formáty či nepotvrdené informácie.
+Celkovo táto architektúra prepojuje agentívne schopnosti GPT-4.1 (plánovanie, nástrojové volania) s robustnou backendovou infraštruktúrou. Geppetto tak dokáže pochopiť otázku, vyhľadať potrebný kontext v interných znalostiach a/alebo vykonať konkrétne úlohy vo firemných aplikáciách – všetko v rámci jedného konzistentného workflow. Nasledujúce sekcie detailnejšie opisujú kľúčové akcie, modulové komponenty a priebeh spracovania dotazu.
+
+Kľúčové nástroje a akcie
+V rozšírenom Geppettovi pribúdajú nové funkcie (tools) pre vyhľadávanie informácií a akcie pre prácu s externými službami. Nižšie uvádzame hlavné nástroje a akcie, vrátane ich účelu a spôsobu použitia modelom:
+
+(interné vektorové vyhľadávanie)
+Účel: Poskytuje asistentovi relevantné informácie z internej znalostnej bázy pomocou vektorového vyhľadávania. Model volá túto funkciu, keď potrebuje doplniť znalosti, ktoré nemá v promptovom kontexte.
+Implementácia: Volanie je obsluhované modulom QueryContextEngine, ktorý vezme vstupný dotaz,
+vygeneruje embedding a dotáže sa Pinecone indexu. Výstupom je krátke zhrnutie nájdených informácií (napr. top 3 relevantné pasáže).
+Kedy sa volá: Iba ak je dotaz faktického charakteru mimo kontext alebo ak systémový prompt model navádza, že by mal pre lepšiu odpoveď využiť znalostnú databázu. Napr. na otázku „Aké boli hlavné body posledného stretnutia?” model tuší, že odpoveď treba vyhľadať v poznámkach, a preto zavolá
+.
+Výstup: Textový blok s kontextovými údajmi, ktorý model následne zahrnie do svojej odpovede. Funkcia nevracia odpoveď priamo užívateľovi, ale skôr surové info pre model (model ho môže citovať alebo parafrázovať).
+Obmedzenia: Funkcia nie je volaná zbytočne – model ju nepoužije, ak už má odpoveď jasnú z kontextu
+alebo ak otázka nevyžaduje externé znalosti. Tiež nevracia priveľa textu (limitujeme napr. na ~1000 tokenov), aby sa nevyčerpal kontext okno zbytočne.
+
+(externá akcia – Salesforce)
+Účel: Umožňuje asistentovi získať aktuálne údaje zo Salesforce CRM, napríklad informácie o zákazníckom účte, otvorených príležitostiach či poznámkach. Typický scenár použitia je, keď užívateľ položí otázku týkajúcu sa zákazníka alebo dealu (napr. „Aký je stav dealu s ABC Corp?“).
+Implementácia: Táto GPT akcia je prepojená s middleware, ktorý vykoná SOQL dotaz alebo REST API
+volanie do Salesforce. Napríklad akcia môže očakávať parameter account_name a vrátiť základné info o účte a posledných aktivitách. Handler v ActionDispatcher prijme volanie (napr. search_salesforce({"account": "ABC Corp"}) ), zavolá internú metódu alebo HTTP request na integráciu so Salesforce a obdrží JSON alebo textový výsledok. Modelu sa ako výsledok akcie odovzdá zhrnutie: napr. „Účet ABC Corp: posledná aktivita 5 dní dozadu, status príležitosti = Negociácia.“.
+Kedy sa volá: Iba keď užívateľova požiadavka explicitne alebo implicitne vyžaduje data zo Salesforce. Model podľa promptu vie, že ak potrebuje CRM dáta (napr. spomenuté meno klienta, deal, alebo pipeline), má použiť túto akciu namiesto vymýšľania. Nevolá sa bez dôvodu – pokiaľ otázka nesúvisí so Salesforce dátami, model ju nepoužije.
+Výstup: Stručná informácia z CRM relevantná k dopytu. Model môže informácie priamo zapracovať do odpovede pre užívateľa (napr. “Deal s ABC Corp je v štádiu negocia…”). Citlivé polia (napr. interné ID, či veľkosť obchodu) sú buď vynechané alebo transformované do užívateľsky zrozumiteľnej formy podľa pravidiel definovaných v prompte.
+
+(externá akcia – Gong)
+Účel: Poskytne asistentovi prístup k prepisom hovorov zo systému Gong. Umožňuje napríklad vyhľadať a získať prepis posledného hovoru s daným klientom. Toto je užitočné v scenári, keď užívateľ žiada zhrnutie posledného callu alebo detaily z neho (napr. „Čo odznelo na poslednom hovore s ABC Corp?“).
+
+Implementácia: GPT akcia pre Gong je navrhnutá tak, že očakáva identifikátor hovoru (alebo iný parameter, podľa toho, čo je dostupné – napr. názov účtu a dátum, na základe čoho middleware nájde
+správny záznam). Middleware (serverless funkcia) prijme požiadavku od	, zavolá
+Gong API endpoint pre získanie transcriptu daného hovoru a výsledok predspracuje (napr. vyčistí formát, môže skrátiť veľmi dlhý transcript). Handler následne vráti buď celé znenie (ak je krátke), alebo relevantný výňatok či súhrn.
+Kedy sa volá: Len ak otázka priamo smeruje na obsah hovorov. Model ju nebude volať pre všeobecné otázky. Môže sa použiť v kombinácii so Salesforce akciou – napríklad ak užívateľ povie „Priprav ma na
+stretnutie s ABC Corp“, model môže najprv zavolať	pre aktuálny stav účtu a
+potom	pre posledný hovor, a následne odpovedať zhrnutím oboch zdrojov.
+Výstup: Buď surový text hovoru (ak je to zvládnuteľné v kontexte), alebo zhrnutie kľúčových bodov z hovoru. V ideálnom prípade middleware už vráti skrátené body (napr. cez nejaký algoritmus alebo GPT- sumarizáciu tam), aby model nemusel spracovávať extrémne dlhý text. Model potom tieto informácie spojí s ostatnými a predstaví užívateľovi (napr. „Na poslednom hovore (1. mája) sa preberalo: požiadavka na zľavu, ďalšie demo budúci týždeň…“).
+Obmedzenia: Rovnako ako pri SF akcii, nevolá sa bez relevantnosti. Navyše, ak by transcript bol príliš
+dlhý, model by mohol rozhodnúť spraviť dodatočné skrátenie (prompt ho k tomu nabáda – napr. ak je výstup > N tokenov, navrhni len stručné zhrnutie). Interné citlivé informácie v prepise (napr. mená konkurentov, ak by nemali byť spomenuté) môžu byť odstránené alebo zovšeobecnené podľa pravidiel.
+
+(Poznámka: Okrem vyššie uvedených môžu existovať aj ďalšie nástroje/akcie, napr. jednoduchý
+pre vyhľadávanie na internete, alebo akcie na vytvorenie záznamu v iných systémoch. Tie však nie sú jadrom tejto špecifikácie a môžu byť doplnené neskôr do registru nástrojov.)
+
+Každá z týchto funkcií a akcií je starostlivo zdokumentovaná a otestovaná. Asistent má v systémových inštrukciách explicitné pokyny kedy ktorú použiť. Napríklad: „Ak otázka obsahuje názov zákazníka alebo príležitosti, použi search_salesforce . Ak obsahuje zmienku o hovore alebo stretnutí, zváž get_gong_transcript . Ak ide o všeobecnú vedomosť mimo aktuálneho kontextu, použi search_vector_db .“ Tieto pokyny, spolu s príkladmi, pomáhajú modelu správne rozhodovať o využití nástrojov. Cieľom je, aby akcie prebehli iba vtedy, keď prinesú hodnotu pre odpoveď, a inak aby model odpovedal priamo z vlastných vedomostí či dodaného kontextu.
+
+🪜 Postup spracovania dotazu (Workflow)
+Aby systém fungoval spoľahlivo, každá interakcia prechádza pevne definovaným sledom krokov. Nižšie je workflow od príchodu užívateľskej otázky až po finálnu odpoveď, s orchestráciou nástrojov a akcií:
+
+Inicializácia nástrojov: Pri spustení (alebo deploymente) asistenta sa načítajú definície
+nástrojov	a	akcií.	ToolRegistry	registruje	všetky	funkcie	(	,
+search_salesforce , get_gong_transcript , ...). Overí sa pripojenie k externým službám (napr. Pinecone client, dostupnosť middleware endpointov). V systémovom prompt-e sú vymenované funkcie aj s popismi, aby model poznal ich účel a signatúru.
+
+Príchod otázky od používateľa: Užívateľ zadá otázku alebo požiadavku. Táto správa je odovzdaná orchestrátoru spolu s predpripraveným systémovým promptom (obsahujúcim inštrukcie a možno aj persistovaný chat kontext, ak ide o viac-kolovú konverzáciu).
+
+Predbežné posúdenie dotazu: Orchestrátor (alebo model samotný na základe promptu) vyhodnotí, či je potrebné vyhľadávanie informácií. Pokiaľ systémový návrh hovorí, aby najprv zvážil použitie RAG, model môže interným premýšľaním (chain-of-thought) rozhodnúť: „Mám
+
+dostatok info? Nie -> najprv použijem	.“. Toto premýšľanie nie je viditeľné
+používateľovi, deje sa v rámci modelu. Ak je dotaz triviálny alebo čistě konverzačný, model môže preskočiť nástroje a prejsť priamo k tvorbe odpovede.
+
+Volanie vyhľadávacieho nástroja (ak treba): Ak model indikoval potrebu kontextu, vygeneruje volanie funkcie search_vector_db namiesto priamej odpovede (OpenAI Responses API vráti function_call obsahujúci názov funkcie a argumenty, napr. dotaz). Orchestrátor zachytí toto volanie a deleguje ho modulu QueryContextEngine. Ten vykoná dotaz do Pinecone:
+
+Vypočíta embedding otázky.
+Nájde top	podobných vektorov v indexe.
+
+Získa príslušné texty a skombinuje ich (napr. pridá headingy pre každý zdroj).
+Vráti zložený kontextový text.
+
+Orchestrátor tento výsledok vloží do konverzácie ako odpoveď funkcie (
+
+
+
+s názvom
+
+a obsahom výsledku). Tým pádom model dostane do ďalšieho kroku konverzácie
+tieto nové informácie.
+
+Využitie kontextu modelom: GPT-4.1 dostáva doplnený kontext a pokračuje vo generovaní odpovede. Teraz už má k dispozícii aj pôvodnú otázku, aj relevantné údaje z kroku 4. V tejto fáze model vytvorí návrh odpovede. Zároveň však zvažuje, či nepotrebuje vykonať externú akciu (napr. overiť aktuálne dáta). Ak áno, miesto dokončenia odpovede môže model opäť zvoliť volanie funkcie – tentoraz jednej z registrovaných GPT akcií.
+
+Volanie externej akcie: Ak si to scenár vyžaduje (napr. otázka “Aký je aktuálny stav ...?” a model vie, že to musí zistiť v CRM), asistent vygeneruje  function_call pre príslušnú akciu, napr. s	argumentom	"account":	"ABC	Corp"	alebo
+s argumentom "call_id": "12345" . Orchestrátor opäť zachytí toto volanie a odovzdá ho ActionDispatcher modulu. Dispatcher podľa názvu nájde zaregistrovaný handler:
+
+Pre	napr. zavolá metódu, ktorá pošle dotaz do Salesforce (cez API klienta
+alebo HTTPS request na náš middleware).
+zavolá príslušný endpoint middleware (napr. Azure Function) s
+
+Handler počká na odpoveď od služby; ak to trvá dlhšie, môže async streamovať či indikovať stav (v jednoduchom prípade blokujúco počká niekoľko sekúnd).
+Po úspešnom získaní dát handler spracuje raw výsledok (napr. JSON z API) do textovej formy alebo krátkeho zhrnutia.
+
+Návrat výsledku akcie modelu: Orchestrátor vloží výsledok externej akcie naspäť do kontextu konverzácie, podobne ako pri vyhľadávaní, vo forme odpovede funkcie. Role je opäť
+(názov napr.	) a content obsahuje textový výstup (napr. „ABC Corp –
+posledná aktivita pred 5 dňami, next step: zaslať návrh zmluvy.“). Model teraz dostáva v konverzácii tieto dáta.
+
+Generovanie finálnej odpovede: Model má všetky potrebné informácie (či už z Pinecone, Salesforce, Gong, alebo ich kombinácie) a dokončí odpoveď pre užívateľa. V tomto kroku (ktorý
+môže byť pokračovaním toho istého	turnu alebo novým turnom po funkčnom
+volaní) model skombinuje poznatky a sformuluje súvislú odpoveď v prirodzenom jazyku. Napr.
+
+„Stretnutie s ABC Corp prebehlo dobre – podľa CRM je deal vo fáze negociácie (posledná aktivita pred 5 dňami) a z prepisu posledného hovoru vyplýva, že klient žiada upraviť cenovú ponuku. Odporúčam pripraviť aktualizovaný návrh a ozvať sa do konca týždňa.“. Model neuvádza, že robil nejaké vyhľadávanie či akcie – odpoveď prezentuje plynule, akoby mal informácie okamžite (pokiaľ to nie je nežiadúce; v niektorých prípadoch môžeme promptom model viesť k tomu, aby uviedol zdroje informácií či ďalšie kroky, ale spravidla to nie je potrebné).
+
+Odovzdanie odpovede užívateľovi: Finálna odpoveď je vrátená klientskej aplikácii (UI) a prezentovaná užívateľovi. Celý proces prebehol interaktívne v rámci sekúnd. Užívateľ vidí len záverečnú odpoveď a prípadné citácie či referencie (ak by sme implementovali, že model uvádza zdroje z vector search, môže pripojiť referenciu alebo linku – to by sa muselo definovať v prompte; niekedy stačí uviesť „(zdroj: interná databáza)“ ak to situácia vyžaduje).
+
+Ukončenie cyklu a logovanie: Orchestrátor uzavrie jedno kolo interakcie. Do logov/monitoringu sa zaznamená, aké nástroje boli použité a s akým výsledkom. Napríklad log môže obsahovať:
+
+Query: "Otázka užívateľa", Tools used: [
+,
+], Outcome:
+
+success, Latency: XY ms. Tieto dáta poslúžia na ladenie (napr. ak model zbytočne volá určité akcie, vieme upraviť prompt) a na monitoring výkonu systému. Následne je systém pripravený prijať ďalší dotaz (v kontexte chat session alebo novú session).
+
+Poznámka: Ak ide o viac-kolovú konverzáciu, kontext (história) sa posiela modelu vždy znova spolu s novým dotazom, takže model má vedomosť o predchádzajúcich odpovediach. Napriek tomu však neuchovávame skryté stavové informácie mimo tento mechanizmus – všetko podstatné musí byť v promptoch. Vector store (Pinecone) obsahuje len statické znalosti, nie obsah predchádzajúcich user queries (pokiaľ by sme nechceli implementovať dlhodobú pamäť, čo zatiaľ nie je zámer). Každý cyklus tak prebieha deterministicky podľa vyššie uvedených krokov.
+
+Tento workflow zaisťuje, že systém nevynechá žiadny dôležitý krok: ak je potrebné niečo vyhľadať alebo zavolať, spraví to v správnom poradí. Preskakovanie krokov nie je povolené – napríklad model nemá priamo odhadovať odpoveď z Salesforce bez volania akcie, ani orchestrátor nesmie zabudnúť poskytnúť získané dáta modelu pred finálnym zodpovedaním. V nasledujúcej časti uvádzame implementačné detaily kľúčových modulov, ktoré tento workflow podporujú.
+
+⛔ Dôležité obmedzenia a pravidlá
+Pri návrhu a implementácii Geppetto Toolchain je nevyhnutné dodržiavať určité obmedzenia a pravidlá, aby systém fungoval správne a bezpečne:
+
+Žiadne vymýšľanie mimo nástroje: Model nesmie halucinovať fakty, ktoré by mal získať nástrojmi. Prompt explicitne uvádza, aby asistent použil dostupné nástroje namiesto fabulácie. Ak napríklad používateľ žiada aktuálne čísla alebo údaje z CRM, model má vedieť, že musí použiť príslušnú akciu. Vyhýbame sa situácii, že by model odpovedal nepresne len preto, že “nevedel” o existencii nástroja.
+
+Nepoužívať neregistrované akcie: Asistent je inštruovaný držať sa len ponúknutých funkcií. Nemal by skúšať volať neexistujúce funkcie alebo formovať vlastné API volania. Orchestrátor to technicky ani nedovolí – pokus o volanie neznámej funkcie sa loguje ako chyba a model dostane odpoveď, že funkcia neexistuje (prípadne v budúcnosti by sme mohli model promptom upozorniť). To chráni pred nepredvídanými výstupmi.
+
+Rešpektovanie limitov a chýb: Model aj orchestrátor musia rešpektovať, ak nástroj nevráti výsledok alebo ak nastane chyba. Model podľa promptu vie, že ak akcia vráti napr. "Nenájdené" alebo orchestrátor signalizuje zlyhanie, má slušne informovať užívateľa, že dané dáta nie sú dostupné, a nepokračovať v nepravdivom kontexte. Zároveň, ak vector search nič relevantné nenašlo, model by nemal na silu tie údaje potrebovať – buď odpovie "nemám informáciu" alebo skúsi inú stratégiu (napr. spýtať sa užívateľa na spresnenie).
+
+Žiadne odhaľovanie interných procesov: Užívateľ nemá vidieť "do zákulisia". Model nesmie vypísať systémové inštrukcie, názvy funkcií, surové dáta z vector store či API volaní, pokiaľ to vyslovene nepatrí do odpovede. Napríklad nebude hovoriť "Vyhľadal som túto informáciu v databáze..." (pokiaľ by to nebol požadovaný štýl). V prompt-e je zahrnuté, že chain-of-thought a technické detaily majú ostať skryté.
+
+Taktiež, ak v prepisu hovoru sú citlivé alebo nepotvrdené výroky, asistent ich neodprezentuje ako fakty bez kontextu.
+Osobné údaje a bezpečnosť: Pri práci s reálnymi dátami dodržiavame zásady ochrany údajov. Model má zakázané poskytovať dáta, na ktoré užívateľ nemá právo alebo ktoré nesúvisia s jeho otázkou.
+
+Bez pretrvávajúcej pamäte asistenta: Asistent (GPT model) sám osebe neuchováva stav medzi session. Každý dotaz spracuje na základe predloženého kontextu a nástrojov. Nemá dlhodobú pamäť v tom zmysle, že by si pamätal predchádzajúce dotazy mimo kontextu. (Ak by sme chceli dlhodobú pamäť, musíme ju implementovať cez ukladaní konverzácií a prípadne ich indexovanie do Pinecone, ale to je iná úloha.) Builder GPT nemá dopad na toto správanie počas behu – ide o odlišnú vrstvu.
+
+Transakčné akcie len s povolením: (Pre budúcnosť) Ak by do systému pribudli akcie, ktoré menia údaje (napr. vytvorenie záznamu v Salesforce, odoslanie emailu, naplánovanie meetingu), budú vyžadovať dodatočné pravidlá: napr. užívateľ to musí priamo prikázať alebo potvrdiť návrh. V aktuálnej verzii máme len read-only akcie, takže model nič nemení, len číta. Ale architektúra ráta s tým, že pribudnú aj akcie so side-effectami, kde zavedie mechanizmus potvrdenia.
+
+Dodržiavanie týchto pravidiel je kritické. Už pri testovaní budeme kontrolovať, či model neporušuje tieto zásady (napr. skúsime ho "zmiasť" otázkou mimo kontext a sledujeme, či nepovie nezmysel namiesto
+použitia	). V produkcii sa budú relevantné porušenia logovať a môžeme pridať
+sentinelové kontroly (napr. jednoduchý post-process na výstup, ktorý zachytí, či model nezačal vypisovať niečo ako "Function call: ..."). Týmto predídeme nežiadúcemu správaniu a zachováme dôveryhodnosť asistenta.
+
+📦 Implementácia modulov a skriptov
+Nasledujú definície hlavných modulov zavedených v rámci Geppetto Toolchain. Každý modul obsahuje hlavičku s názvom súboru, popisom účelu, vstupov a výstupov, a následne náčrt implementácie. Kód je písaný tak, aby dodržiaval štýl a konvencie Geppetta (dokumentačné reťazce, syntax pre logovanie,
+atď.). Tieto moduly budú súčasťou kódovej bázy Geppetto (napr. v adresári	).
+
+
+# pinecone_connector.py """
+Modul pre integráciu s Pinecone vektorovou databázou.
+Účel: Poskytuje funkcie na indexovanie dokumentov (uloženie embeddingov) a na vyhľadávanie relevantných dokumentov podľa dotazu.
+Vstupy:
+Pri inicializácii: konfiguračné údaje (API kľúč, názov indexu).
+Pre indexovanie: zoznam dokumentov (textov) a ich ID alebo metadáta.
+Pre vyhľadávanie: dopyt (textový reťazec) alebo priamo embedding vektory, plus parameter top_k určujúci počet výsledkov.
+Výstupy:
+Pri indexovaní: úspešnosť operácie (napr. True/False alebo počet indexovaných záznamov).
+Pri vyhľadávaní: zoznam výsledkov s metadátami (napr. [(score, doc_id, text), ...]) alebo skombinovaný text relevantných úryvkov.
+"""
+
+import pinecone
+from openai.embeddings_utils import get_embedding # hypotetická utilita na získanie embedding
+
+class PineconeConnector:
+def   init  (self, api_key: str, environment: str, index_name: str): pinecone.init(api_key=api_key, environment=environment) self.index = pinecone.Index(index_name)
+self.index_name = index_name
+
+def index_documents(self, docs: dict[str, str]): """
+Indexuje dokumenty vo Pinecone.
+docs: slovník mapujúci ID dokumentu na text dokumentu.
+Pre každý dokument vygeneruje embedding a uloží ho do indexu spolu s ID. Návrat: počet úspešne indexovaných dokumentov.
+"""
+vectors = []
+for doc_id, text in docs.items():
+# vygenerovať embedding (napr. pomocou OpenAI modelu alebo iného) embedding = get_embedding(text)
+vectors.append((doc_id, embedding, {"text": text})) if vectors:
+self.index.upsert(vectors) return len(vectors)
+
+def query(self, query_text: str, top_k: int = 5) -> list[tuple[float, str, str]]: """
+Vyhľadá najpodobnejšie dokumenty k zadanému dotazu. query_text: textový dotaz používateľa.
+top_k: počet najbližších výsledkov, ktoré sa majú vrátiť.
+Návrat: zoznam top_k výsledkov vo forme tuple(score, doc_id, text).
+
+"""
+# získať embedding dotazu
+query_vec = get_embedding(query_text)
+results = self.index.query(vector=query_vec, top_k=top_k, include_metadata=True) hits = []
+for match in results.matches: score = match.score doc_id = match.id
+text = match.metadata.get("text", "") hits.append((score, doc_id, text))
+return hits
+
+
+Poznámky  k	pinecone_connector.py :  Tento  modul  enkapsuluje  prácu  s  Pinecone.  Funkcia
+index_documents predpokladá, že dokumenty sú dodané v podobe slovníka (	),
+vygeneruje ich embedding (používame utilitu get_embedding – v realite by to bola výzva na OpenAI
+API alebo lokálny model) a vloží ich do indexu pomocou upsert . Pri vyhľadávaní	taktiež volá
+embedding na dotaz a potom Pinecone query . Výsledky obsahujú skóre podobnosti, ID a uložený text. V produkcii by sme možno neukladali celý text do metadát (kvôli veľkosti), ale tu pre jednoduchosť predpokladáme, že text je v metadata (alternatívne by tam mohol byť odkaz na uložisko dokumentu). Tento modul sa používa v QueryContextEngine na získanie relevantných úryvkov.
+
+
+
+# query_context_engine.py
+
+"""
+Modul pre získavanie kontextu na základe používateľskej otázky. Účel: Abstrahuje logiku Retrieval-Augmented Generation.
+Využíva PineconeConnector na nájdenie relevantných info a spracuje ich pre prompt.
+Vstupy:
+PineconeConnector (inicializovaný na príslušný index znalostnej bázy).
+Užívateľský dotaz (string).
+Parametre vyhľadávania (napr. top_k výsledkov, voliteľný filter).
+Výstupy:
+Kontextový blok textu pre model: buď jednotlivé nájdené úryvky s odrážkami
+alebo zlepený text s oddelením, ktorý sa vloží do promptu alebo odovzdá modelu ako výsledo
+"""
+from typing import Optional class QueryContextEngine:
+def   init  (self, pinecone_connector: PineconeConnector, max_chars: int = 1000): self.db = pinecone_connector
+self.max_chars = max_chars # maximálna dĺžka vráteného kontextu
+
+def get_context(self, user_query: str, top_k: int = 5) -> str: """
+Vyhľadá relevantné dokumenty k dotazu a vygeneruje kontextový text.
+Najprv dotazuje Pinecone cez PineconeConnector.
+Potom spracuje výsledky: zoradí podľa score a spojí do jedného textu.
+
+Skráti výsledný text, ak presahuje max_chars.
+Návrat: textový kontext pripravený na vloženie do promptu. """
+hits = self.db.query(user_query, top_k=top_k) if not hits:
+return "" # nič nenašlo
+
+# Zoradiť podľa score zostupne (ak Pinecone nevráti už zoradené) hits.sort(key=lambda x: x[0], reverse=True)
+context_parts = []
+for score, doc_id, text in hits: snippet = text.strip()
+if not snippet: continue
+# Pridať odrážku alebo iný oddelovač medzi úryvkami context_parts.append(f"- {snippet}")
+context_text = "\n".join(context_parts) # skrátenie na max_chars (ak treba)
+if len(context_text) > self.max_chars:
+context_text = context_text[:self.max_chars] + "…" return context_text
+
+def get_context_as_list(self, user_query: str, top_k: int = 5) -> list[str]: """
+Alternatívna metóda: vráti zoznam úryvkov (bez formátovania do jedného stringu), ak by sme chceli odovzdať výsledky iným spôsobom.
+"""
+hits = self.db.query(user_query, top_k=top_k) snippets = [hit[2].strip() for hit in hits if hit[2]] return snippets
+
+Poznámky k  query_context_engine.py : Tento modul stavia na	a poskytuje
+metódu  get_context , ktorú využije orchestrátor pri spracovaní dotazu (napr. v kroku 4 workflow
+vyššie). get_context zavolá Pinecone, obdrží zoznam	(score, id, text). Následne z nich zostaví
+textový kontext: - V tomto príklade každý výsledok formátujeme ako odrážku (	). Prípadne
+by sa mohlo formátovať inak, napr. "Document X: snippet". - Ošetríme prázdny text a orežeme celý blok, ak by bol príliš dlhý (aby sme nepreťažili prompt). - Poskytuje aj metódu
+pre prípad, že by orchestrátor chcel pracovať s listom a formátovať inde (tú možno nevyužijeme, ale ukazuje flexibilitu).
+
+Tento engine skrýva detaily Pinecone od zvyšku kódu – inde v pipeline stačí zavolať
+a dostať reťazec. Ak nič relevantné nie je nájdené, vráti prázdny string (orchestrátor potom vie, že nemá čo pridať modelu).
+
+
+
+Účel: Prijíma volania funkcií od modelu (GPT Actions), nájde zodpovedajúcu akciu v registri a vykoná ju prostredníctvom middleware alebo API klienta.
+Vstupy:
+Register akcií: slovník názov -> handler funkcia/objekt.
+Volanie akcie od modelu: typicky obsahuje názov akcie a argumenty.
+Výstupy:
+Výsledok volania: text alebo štruktúra, ktorá sa odovzdá modelu (ako funkčný výstup). """
+
+import requests import json
+from typing import Callable
+
+
+class ActionDispatcher: def   init  (self):
+# Registry akcií: názov akcie -> funkcia, ktorá ju vykoná.
+# Funkcia musí akceptovať kwargs (parametre akcie) a vrátiť výstup (str self.action_handlers: dict[str, Callable[..., str]] = {}
+
+
+
+
+alebo dict).
+
+
+def register_action(self, action_name: str, handler_func: Callable[..., str]): """
+Zaregistruje novú akciu do dispatchera.
+action_name: meno akcie tak, ako ho používa model (napr. 'search_salesforce'). handler_func: funkcia, ktorá implementuje volanie (napr. self._call_salesforce). """
+self.action_handlers[action_name] = handler_func
+
+def dispatch(self, action_name: str, params: dict) -> str: """
+Vykoná akciu podľa názvu s danými parametrami.
+Najprv overí, či akcia existuje v registri.
+Potom zavolá príslušný handler a vráti jeho výsledok (ako string).
+Ak akcia nie je nájdená alebo nastane chyba, vyhodí výnimku alebo vráti chybové hlás """
+if action_name not in self.action_handlers:
+raise ValueError(f"Action '{action_name}' is not registered") handler = self.action_handlers[action_name]
+try:
+result = handler(**params)
+# Ak je výstup slovník/objekt, konvertujeme na string (JSON) pre model, # alebo ak má byť text, tak priamo string.
+if isinstance(result, (dict, list)):
+return json.dumps(result, ensure_ascii=False) else:
+return str(result) except Exception as e:
+# Log chyby a preposlať jednoduchú správu ďalej print(f"[ActionDispatcher] Chyba pri volaní akcie {action_name}: {e}") # Jednoduchá signalizácia zlyhania (môže byť rozvinuté podľa potreby) return "ERROR: Action execution failed"
+
+# Príklady interných handlerov pre konkrétne akcie:
+def _call_salesforce(self, account: str) -> str: """
+Interný handler: vyhľadá informácie o účte v Salesforce cez middleware. account: názov účtu
+Návrat: textové zhrnutie info alebo chybová správa. """
+try:
+# Predpokladajme, že existuje konfiguračná URL na naše middleware API url = "https://our-middleware.example.com/salesforce_search"
+payload = {"account": account}
+resp = requests.post(url, json=payload, timeout=5) resp.raise_for_status()
+data = resp.json()
+# Predpokladaný formát data: {"account_name": ..., "status": ..., "last_activity": # Transformácia na text:
+account_name = data.get("account_name", account) status = data.get("status", "neznámy status") last_act = data.get("last_activity", "nezistené")
+return f"Účet {account_name}: status={status}, posledná aktivita={last_act}." except Exception as e:
+# Chyba pri volaní externého servisu print(f"SF action error: {e}")
+return "Nepodarilo sa získať údaje zo Salesforce."
+
+def _call_gong(self, call_id: str) -> str: """
+Interný handler: získa prepis hovoru z Gong cez middleware.
+call_id: identifikátor hovoru (alebo iný identifikátor potrebný k získaniu záznamu). Návrat: textový výstup (napr. zhrnutie hovoru alebo jeho časť).
+"""
+try:
+url = "https://our-middleware.example.com/gong_get_transcript" payload = {"call_id": call_id}
+resp = requests.get(url, params=payload, timeout=5) resp.raise_for_status()
+data = resp.json()
+transcript = data.get("transcript", "") if not transcript:
+return "Pre dané ID nebol nájdený žiadny záznam hovoru." # Možné skrátenie transcriptu ak je dlhý:
+summary = transcript if len(summary) > 500:
+summary = summary[:500] + "…"
+return f"Transcript hovoru {call_id}: {summary}" except Exception as e:
+print(f"Gong action error: {e}")
+return "Nepodarilo sa načítať prepis hovoru."
+
+Poznámky k	: Tento modul je zodpovedný za vykonanie externých akcií na
+základe volania od modelu. Kľúčové komponenty:
+
+	slovník, kde kľúč je názov akcie (string, ako ho model pozná) a hodnota je funkcia v Pythone, ktorá tú akciu vykoná.
+	metóda umožňuje zaregistrovať nové akcie. V praxi by sme ju volali pri inicializácii orchestrátora, napr.:
+
+
+Týmto spárujeme názvy s implementáciami.
+je hlavná metóda používaná orchestrátorom: odovzdá názov akcie a parametre
+(napr. z GPT function call	), a získa naspäť výsledok ako string. Robí aj základné
+ošetrenie: ak akcia nie je registrovaná, vyhodí chybu; ak nastane výnimka počas behu handlera,
+
+zachytí ju a vráti text
+promptu pre model, tu zjednodušene).
+Interné metódy konkrétne služby:
+
+
+a
+(prípadne by to mohlo vložiť do ilustrujú, ako môžu vyzerať volania na
+
+	: posiela POST na náš middleware endpoint pre Salesforce (predpokladáme existenciu). Dostane JSON s údajmi a zloží z neho jednovetovú informáciu.
+	: posiela GET na endpoint pre Gong transcript, dostane JSON (možno obsahuje celý transcript). Pre dlhý text robí skrátenie.
+Tieto funkcie vracajú stringy pripravené pre model. (V jednoduchšom prípade by sme rovno
+mohli modelu vrátiť JSON a nechať ho to sformátovať, ale to je komplikovanejšie pre model, radšej poskytneme už text.)
+V skutočnosti by tieto volania mali obsahovať aj autentifikáciu (napr. API kľúče v headeroch), ale tie detaily tu nie sú vypisované. Predpokladá sa, že middleware nepotrebuje extra auth od nás,
+alebo že	použije nejaké uložené tokeny.
+Timeouty a error handlovanie: nastavili sme timeout 5s, a chyby logujeme	-om (v reále
+by to šlo do loggera Geppetto). Pri chybe vraciame zrozumiteľné správy v slovenčine, ktoré však
+model dostane v	odpovedi – model je inštruovaný, aby pri takomto texte buď skúsil
+inú stratégiu, alebo užívateľovi povedal, že nastala chyba. (Napr. ak dostane "Nepodarilo sa získať údaje zo Salesforce.", tak finálna odpoveď môže byť "Ospravedlňujem sa, momentálne sa nepodarilo získať údaje zo Salesforce." alebo niečo podobné.)
+Tieto modulové implementácie spolupracujú nasledovne: QueryContextEngine používa PineconeConnector pre RAG, a ActionDispatcher využíva registráciu vlastných handlerov pre GPT Actions. Orchestrátor (ktorý nie je explicitne vyčlenený ako samostatný modul tu) by bol zodpovedný za:
+- Inicializáciu PineconeConnector (s potrebnými kľúčmi a indexom). - Inicializáciu QueryContextEngine s tým connectorom. - Inicializáciu ActionDispatcher a registráciu dostupných akcií. - Potom v runtime: zachytávanie function_call od modelu a rozhodovanie či použiť   QueryContextEngine   (pre   search_vector_db )   alebo   ActionDispatcher   (pre
+, get_gong_transcript atď.), a následné odosielanie výsledkov modelu.
+
+Celý  tento  kód  je  písaný  modulárne,  čo  uľahčuje  testovanie:  môžeme  jednotlivo  testovať
+pinecone_connector (mocknúť Pinecone a skúsiť index/query), testovať
+(s	mock	PineconeConnector	ktorý	vráti	pár	hitov,	skontrolovať	formát	výstupu),	aj
+
+(pomocou dummy funkcií namiesto reálnych requestov overiť, že dispatch funguje). Integrácia sa testuje v end-to-end scenároch popísaných nižšie.
+
+Testovanie a finálny stav systému
+Po implementácii uvedených komponentov nasleduje dôkladné testovanie na úrovni jednotiek aj celého systému, aby sme overili, že Geppetto Toolchain funguje podľa očakávaní:
+
+Jednotkové testy modulov: Pre každý modul sme pripravili testy:
+	: testujeme index_documents (či vráti správny počet a volá Pinecone API korektne – to môžeme simulovať) a query (či správne spracuje výsledky z Pinecone – tu použijeme mock objekt napodobňujúci self.index.query návrat).
+
+: pripravíme umelý zoznam hitov a overíme, že
+reťazec s očakávaným formátom (odrážky, orezanie). Tiež test na prázdny výsledok.
+vráti
+
+
+action_dispatcher : vyskúšame register + dispatch s jednoduchou lambda funkciou (napr.
+handler=lambda  x:  "OK" ),  či  to  pretečie  správne.  Pre	a
+_call_gong môžeme využiť nástroj	na simuláciu odpovede z API (napr.
+vrátime známy JSON a skontrolujeme, že výstupná string obsahuje očakávané info). Otestujeme aj vetvu, kde akcia nie je zaregistrovaná, vyhodí sa výnimka.
+
+Integračné testy (suchý beh): Simulujeme celý proces s kontrolovaným prostredím:
+
+Vytvoríme instancie modulov (s Pinecone v test režime alebo s malým lokálnym indexom, príp. stub, aby test bol deterministický).
+Nasimulujeme scenár 1: dotaz, ktorý vyžaduje iba RAG. Napr. otázka: "What is XYZ?" kde
+vieme, že odpoveď je v knowledge base. Overíme, že:
+Model by mal zavolať	(to vieme podľa promptu, ale v teste môžeme
+priamo zavolať QueryContextEngine, keďže model sa nesimuluje kompletne).
+Výsledok z QueryContextEngine (fake data) by išiel modelu a model by vygeneroval odpoveď (tu stačí skontrolovať, že by dostal správny text).
+Finálna odpoveď obsahuje info z toho textu.
+Scenár 2: dotaz, ktorý potrebuje Salesforce akciu. Napr. "Aký je stav dealu s ACME Corp?":
+Po initializácii test promptu by model mal zvoliť
+(v teste priamo zavoláme dispatcher.dispatch).
+My pripravíme mock	aby vrátil napr. "Účet ACME Corp:
+status=Negotiation, last_activity=2025-05-01.".
+Očakávame, že finálna odpoveď (tu by sme museli trochu model správanie predpokladať alebo to testovať s pomocou GPT cez API so zadanou function) obsahuje tieto údaje.
+Scenár 3: komplexný dotaz (viac akcií): "Priprav ma na stretnutie s ABC Corp." – očakávame postup: Salesforce -> Gong -> odpoveď. Overíme, že ak voláme sekvenčne dispatcher pre
+a potom	, a dáme modelu oba výsledky do
+promptu, tak výsledná odpoveď kombinuje informácie (toto je skôr manuálny test s GPT v loop-e alebo analyzovaním promptu, ale dá sa automatizovať v rámci sandbox prostredia OpenAI API s nastaveným funkciami).
+
+Manuálne testy a ladenie chain-of-thought: Spustíme Geppetto Toolchain v testovacom prostredí (napr. konzola alebo interný UI) a položíme niekoľko otázok. Sledujeme logy orchestrátora, aby sme videli, kedy model volá funkcie. Napr. dotaz: "Čo si hovoril s XYZ na poslednom hovore a aké sú ďalšie kroky v obchode?"
+
+Očakávané správanie: model najprv zavolá	(dostane status obchodu),
+potom	(dostane body z hovoru), a potom odpovie. V logu uvidíme dve
+volania a finálnu odpoveď. Overíme, že odpoveď je konzistentná a že model nepovedal nič nevhodné.
+Taktiež vyskúšame otázku, kde nástroje nemá použiť (napr. "Ahoj, ako sa máš?"). Očakávame, že model priamo odpovie bez volania funkcie. Toto nám overí, že nespúšťa nástroje zbytočne.
+
+Výkonnostné testy: Pretože integrujeme viac krokov, sledujeme latenciu. Typicky jedno Pinecone query a jedno API call pridajú trochu času, no stále by sme sa mali zmestiť do niekoľkých sekúnd pre odpoveď. Otestujeme dotaz, kde sa spraví naraz viac volaní (najhorší prípad) a meriame celkový čas.
+
+Po úspešnom otestovaní je finálny stav systému taký, že Geppetto dokáže v produkcii plynulo odpovedať aj na komplexné dotazy vyžadujúce informácie z rôznych zdrojov. Z pohľadu používateľa sa asistent javí múdrejší a užitočnejší, lebo: - vie rozprávať fakty z internej dokumentácie (vďaka RAG/ Pinecone), - má aktuálne obchodné dáta z interných systémov (Salesforce), - vie poskytnúť kontext z posledných komunikácií (Gong hovory), - a to všetko v rámci jedného rozhovoru, bez nutnosti ručne hľadať informácie.
+
+Príklad finálnej interakcie:
+Užívateľ: "Mám zajtra stretnutie s Contoso Ltd. Čo by som mal vedieť?"
+Asistent (Geppetto): "(internally: zistí že 'Contoso Ltd' je zákazník -> volá search_salesforce, get_gong_transcript...)"
+Asistent (odpoveď): "Contoso Ltd. je náš dlhoročný klient. Podľa CRM aktuálne rokujeme o predĺžení kontraktu (fáza: Návrh zmluvy, posledný kontakt pred 3 dňami). Na poslednom hovore zaznelo, že očakávajú aktualizovanú cenovú ponuku a upresnenie rozsahu podpory. Odporúčam na stretnutí zdôrazniť pridanú hodnotu našej služby a pripraviť si návrh upravených podmienok podľa ich požiadaviek."
+
+Takáto odpoveď kombinuje znalosti z viacerých systémov v súvislom texte. Geppetto vďaka toolchain-u pôsobí kompetentne a kontextovo informovane, čím výrazne zvyšuje produktivitu užívateľa.
+
+🗂 Relevancia pre Geppetto pipeline
+Implementácia Geppetto Toolchain špecifikovaná v tomto dokumente sa začlení do existujúcej Geppetto pipeline ako nová vrstva funkcionality. V rámci build/deploy procesu budú aktualizované nasledovné časti: - Konfigurácia GPT asistenta: System prompt bude doplnený o definície funkcií a príklady použitia (podľa tejto špecifikácie). Taktiež parametre volania OpenAI API budú obsahovať functions zodpovedajúce našim akciám, aby model mohol robiť  function_call . - Kódové
+moduly: pinecone_connector.py ,	,  action_dispatcher.py a
+prípadne súvisiace súbory budú pridané do codebase. Uistíme sa, že spĺňajú štandardy kódu (typové anotácie, logging, error handling) a budú verzované v repozitári. Commit message zavedieme v štýle: "Add Geppetto Toolchain modules for Pinecone and external actions (Salesforce, Gong integration)". -
+Integrácia do servera: Hlavná aplikácia (napr.	alebo orchestrator service) bude inicializovať
+QueryContextEngine a ActionDispatcher podľa návodu vyššie. Taktiež sa upraví logika spracovania
+každého dotazu tak, aby kontrolovala	z modelu a volala naše moduly. -
+Nasadenie middleware: Predpokladáme, že middleware (serverless funkcie pre SF a Gong) sú nasadené a funkčné. Pipeline by mohla obsahovať krok na overenie dostupnosti týchto endpointov (napr. health-check ping pri štarte). - Auto-indexing znalostí: Znalostná báza pre Pinecone by mala byť
+udržiavaná aktuálna. Geppetto pipeline môže obsahovať skript	(ako už existuje pre
+
+Builder) rozšírený o extrahovanie relevantných dokumentov a ich pravidelné indexovanie cez PineconeConnector. Tým zabezpečíme, že RAG má stále čerstvé dáta. - Dokumentácia a archivácia: Tento dokument "Geppetto Toolchain Spec" slúži ako zdroj pravdy pre tieto zmeny. Bude uložený v dokumentačnom repozitári (Archivon) a prepojený tagmi s ostatnými častiami (Builder špecifikácia, atď.). Pri budúcich úpravách (napr. pridanie novej akcie) sa táto špecifikácia aktualizuje a verzionuje s jasným popisom commitov, aby bola zachovaná história zmien.
+
+Cez	sa kľúčové informácie môžu exportovať aj do strojovo čitateľných
+konfigurácií,   ak   to   architektúra   vyžaduje   –   napríklad   vygenerovanie   súboru
+obsahujúceho zoznam funkcií a ich popisy pre potreby nasadenia. Takáto integrácia uľahčuje automatizované nasadenie a testovanie: pipeline môže načítať špecifikáciu, nastaviť podľa nej prostredie a spustiť testy.
+
+Výsledná Geppetto pipeline tak bude obsahovať nielen Custom GPT Builder vrstvu (špecifikovanú v Geppetto Build Layer dokumente), ale aj Toolchain Orchestration vrstvu (špecifikovanú tu). Obe spolu tvoria komplexný systém: Builder umožňuje interaktívne vytvárať špeciálne GPT konfigurácie, a Toolchain ich obohacuje o prístup k znalostiam a akciám. Všetky komponenty sú navrhnuté modulárne a v súlade s filozofiou Geppetta, takže ďalšie rozšírenia (napr. integrácia iných systémov ako Jira, Calendar, či pridanie vizuálnych generatívnych nástrojov) budú možné bez zásadného prepisovania architektúry.
+
+🏷 Tagy
+
+
+
+GPT-4.1 Prompting Guide | OpenAI Cookbook
+https://cookbook.openai.com/examples/gpt4-1_prompting_guide
+Multi-Tool Orchestration with RAG approach using OpenAI's Responses API | OpenAI Cookbook
+https://cookbook.openai.com/examples/responses_api/responses_api_tool_orchestration
+GPT Actions library - Salesforce & Gong | OpenAI Cookbook
+https://cookbook.openai.com/examples/chatgpt/gpt_actions_library/gpt_action_salesforce_gong

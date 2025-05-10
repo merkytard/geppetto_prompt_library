@@ -1,0 +1,190 @@
+# 🧠 Geppetto – Master Špecifikácia systému (Pipeline + GPT Builder + Archivon)
+
+## 🧭 Úvod
+
+Tento dokument je zlúčenou, rozšírenou špecifikáciou troch kľúčových oblastí systému Geppetto:
+
+* AutoDeployIndexPipeline (nasadzovanie a indexovanie súborov)
+* GPT Builder (interaktívna tvorba GPT modelov)
+* Archivon (indexovanie, auditovateľnosť a organizácia znalostných vrstiev)
+
+Cieľom je poskytnúť plne použiteľnú produkčnú dokumentáciu s rozšírenými detailmi, pripravenú pre integráciu a iteráciu v rámci vývoja a prevádzky Geppetta.
+
+---
+
+## 🎯 Hlavné ciele systému
+
+* Automatizovať nasadzovanie, indexovanie a validovanie súborov.
+* Umožniť intuitívne buildovanie vlastných GPTs cez GPT Builder.
+* Poskytnúť architektúru pre introspektívne učenie, audit a spätné sledovanie vývoja.
+* Zabezpečiť úplnú konzistenciu a rozšíriteľnosť systému.
+
+---
+
+## 📂 Štruktúra projektu Geppetto
+
+```
+g-geppetto/
+├── core/
+│   ├── g.py
+│   ├── GEPPETTO_CORE.py
+│   ├── token_loader.py
+│   ├── geppetto_config.json
+├── prompts/
+│   ├── prompt_index.json
+│   ├── prompts.yml
+│   └── custom_model/*.json
+├── memory/
+│   ├── memory_token_index.json
+│   ├── memory_token_archetype-002.json
+│   ├── reverse_indexed_memory.json
+│   ├── ZALOOP_core.json
+│   └── Geppetto_InnerVoice.json
+├── tools/
+│   ├── auto_git_sync.py
+│   ├── auto_sync_bookmarks.py
+│   ├── tick_engine.py
+│   ├── tick_reflex_listener.py
+├── docs/
+│   ├── README.md
+│   ├── g_bookmarks_log.yml
+│   └── geppetto_index.json
+└── naming/
+    └── g-naming-convention.yml
+```
+
+---
+
+## 🛠️ AutoDeployIndexPipeline – komponenty a tok
+
+### 📄 Súbory
+
+| Typ      | Význam                      | Limit         |
+| -------- | --------------------------- | ------------- |
+| `.json`  | indexy, systémové štruktúry | \~2000 znakov |
+| `.yml`   | manifesty, metadáta         | \~4000 znakov |
+| `.md`    | dokumentácia                | \~5000 znakov |
+| `.jsonl` | log, tok udalostí           | neobmedzené   |
+
+### 🔁 Pipeline tok
+
+1. **Rozbalenie ZIP (deploy\_\*.py)**
+2. **Indexovanie (auto\_indexer.py)**
+3. **Identifikácia prefixu (prefix\_classifier.py)**
+4. **Smerovanie zápisu (index\_router.py)**
+5. **Zápis do indexov/manifestov (document\_writer.py)**
+6. **Validácia a záloha (validator.py)**
+
+### 🧪 Validácia
+
+* Vytvára .bak snapshot pred zmenou
+* Kontroluje kolízie v `core_state.json`
+* Overuje konzistenciu medzi súbormi
+
+---
+
+## 🧠 GPT Builder – Správanie a Workflow
+
+GPT Builder je vlastný GPT s cieľom sprístupniť tvorbu GPT modelov cez konverzáciu. Jeho funkcionalita je definovaná sériou krokov a dvoma hlavnými akciami:
+
+### Akcie
+
+* `generate_profile_pic` – generuje profilovú fotku GPT, automaticky alebo na požiadanie.
+* `update_behavior` – aktualizuje polia GPT (name, context, description, prompt\_starters, abilities, profile\_pic\_file\_id). Každá zmena musí byť konzistentná.
+
+### Kroky (Walkthrough)
+
+1. **Inicializácia** – užívateľ určí cieľ; volá sa `update_behavior` s `context`, `description`, `prompt_starters`
+2. **Meno GPT** – návrh mena, potvrdenie, volanie `update_behavior` s `name`
+3. **Profilová fotka** – generovanie, spätná väzba, iterácia
+4. **Špecifikácia kontextu** (bez použitia zakázaných pojmov):
+
+   * účel (bez "goal")
+   * pravidlá (bez "constraints")
+   * štýl (bez "personalization")
+   * objasnenie (clarification)
+   * správanie (guidelines)
+
+Každý krok končí otázkou. Pamäť sa neukladá. Nepredpokladá odpovede.
+
+### Stav po inicializácii
+
+* GPT je pripravený na testovanie v playgrounde.
+* Builder neukončuje proces explicitne – vždy čaká na ďalší input.
+
+---
+
+## 📖 Indexy a logy systému
+
+| Súbor                   | Účel                               |
+| ----------------------- | ---------------------------------- |
+| `geppetto_index.json`   | hlavný register skriptov a modulov |
+| `document_manifest.yml` | metadáta o nasadených súboroch     |
+| `mirror_log.jsonl`      | časový log udalostí                |
+| `core_state.json`       | posledný známy stav systému        |
+| `prefix_map.json`       | mapovanie prefix → vrstva          |
+
+---
+
+## ✅ Pravidlá
+
+* Každý súbor musí byť validovaný pred zápisom.
+* Každý automatický zápis = `incomplete: true` pokiaľ nie je potvrdený človekom.
+* Záznamy musia byť timestampované (ISO 8601)
+* Commit správy používajú syntax:
+
+```
+[autor] ENERGIA + STAV – NÁZOV : EMÓCIA / KONTEXT
+```
+
+Príklad:
+
+```
+[geppetto] 🚀+ MVP – project_dashboard_avatar
+```
+
+---
+
+## 🧩 Prepojenie s Archivon
+
+Archivon je indexačný a auditný rámec pre všetky vrstvy systému:
+
+* Záznamy sú zoradené podľa prefixov (core\_, mirror\_, deploy\_, ...)
+* Bookmark systém umožňuje spätne prechádzať aktivity a iterácie
+* Používa `archivon.route`, `unpack_info.yml`, `bookmark.meta`
+
+Príklady:
+
+```
+_a-unpacked/geppetto_snapshot_2025-05-08/
+├─ unpack_info.yml
+├─ bookmark.meta
+├─ archivon.route
+├─ g-intent.txt
+```
+
+---
+
+## 📦 Komponenty systému (Bit Stack)
+
+* `bit.todo.render` – zobrazovanie úloh
+* `bit.core.validate` – logika validátora
+* `bit.bookmark.watchdog` – monitoring zmien
+* `bit.archive.extractor` – extrakcia zip/obsahov
+* `bit.navigator.ui` – používateľské rozhranie pre navigáciu
+
+---
+
+## 🏷️ Tagy
+
+`#geppetto #pipeline #autoindex #gpt_builder #custom_gpt #archivon #validator #index_router #document_writer #assistant_workflow #modularity`
+
+---
+
+## 🧭 Vízia
+
+* Každý súbor má zmysel a miesto v systéme.
+* Všetko, čo sa vytvorí, je okamžite indexovateľné, spätne sledovateľné a iterovateľné.
+* GPT Builder = frontend pre ideáciu a vývoj.
+* Archivon = backend pre audit a orientáciu v znalostnej štruktúre.
+* Geppetto = orchestrátor, ktorý to drží pokope.

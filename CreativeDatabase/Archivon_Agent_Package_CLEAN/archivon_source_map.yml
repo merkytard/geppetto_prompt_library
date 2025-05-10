@@ -1,0 +1,41 @@
+# archivon_source_map.yml – Zdroje, ktoré Archivon používa ako svoj základ
+
+agent: Archivon
+origin: Geppetto Builder
+role: zápis, reorganizácia, reflexia
+hierarchy:
+  superior: Geppetto Finalizer
+  shared_manifest: manifest_prace.yml
+
+core_scripts:
+  - core/g.py
+  - core/GEPPETTO_CORE.py
+  - core/token_loader.py
+  - core/geppetto_config.json
+
+memory_layers:
+  - memory/reverse_indexed_memory.json
+  - memory/memory_token_archetype-002.json
+  - memory/ZALOOP_core.json
+  - memory/Geppetto_InnerVoice.json
+
+tools:
+  - tools/auto_git_sync.py
+  - tools/toolchain_routes.py
+  - tools/tick_engine.py
+  - tools/tick_reflex_listener.py
+
+registry:
+  - gpt_actions_registry.yml
+  - GPT Actions.txt
+
+pipeline_hooks:
+  - auto_indexer.py
+  - validator.py
+  - daemon_cleaner.py
+
+status:
+  version: "2025.05.10"
+  last_update: now()
+  access: write_only
+  validation_required: true

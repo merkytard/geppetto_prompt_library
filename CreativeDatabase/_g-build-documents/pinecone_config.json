@@ -1,0 +1,7 @@
+{
+  "index_name": "geppetto-index",
+  "dimension": 1536,
+  "metric": "cosine",
+  "environment": "us-west1-gcp",
+  "api_key": "PINECONE_API_KEY"
+}
