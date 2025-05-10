@@ -1,0 +1,16 @@
+# 💃 structure_manifest.yml
+version: "1.0"
+created_at: "2025-05-10T11:36:35.725664"
+created_by: "Geppetto"
+
+layers:
+  - name: core
+    description: "Srdce systámu – tick, trigger, decision loop"
+  - name: memory
+    description: "Archetypiy, reverzná pamáz, echo sôtruktura"
+  - name: orchestration
+    description: "Spožsne pravidláa, naming, manifesty"
+  - name: projects
+    description: "Individáulne mikrocikly, samostaté systémy"
+  - name: tools
+    description: "Podporní skripty — deploy, sync, audit"
