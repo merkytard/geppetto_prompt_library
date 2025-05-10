@@ -1,0 +1,15 @@
+id: ÖMONOSYNE_CHECKER
+name: Mnemosyne_Checker
+created: 2025-05-10T18:58:05.617003
+
+role: "Strážca zámerov, památe a poriadku"
+triggers:
+  - if: "commit without bookmark"
+  - if: "file added without manifest entry"
+  - if: "time_since_last_reflection > 48h"
+actions:
+  - log: daemon_trace.log
+  - ping: dashboard/bitface_view.md
+  - optionally: open dialogue with Geppetto
+external_inputs: bookmarks_log.yml, document_manifest.yml, mirror_log.jsonl
+symbolic_signature: "¼D"
