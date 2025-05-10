@@ -1,35 +1,28 @@
 @echo off
-echo [ORGANIZE] Archivon files reorganizing...
+echo [REORGANIZE] Presúvam súbory Archivon projektu...
 
-REM Vytvor priečinky
-mkdir core
+REM Vytvor nové cieľové priečinky
+mkdir deploy
 mkdir logic
 mkdir cycles
-mkdir vector
 mkdir mirror
-mkdir deploy
+mkdir vector
 
 REM Presuň súbory
-move archivon_agent.py core\
-move archivon_manifest.json core\
-move archivon_source_map.yml core\
+move g.py deploy\
+move deploy_bit_dashboard.bat deploy\
 
-move fallback_logic.yml logic\
 move naming_convention.yml logic\
+move fallback_logic.yml logic\
 
 move knowledge_cycles.yml cycles\
 move autodeploy_circle.py cycles\
 
-move vector_demon.py vector\
+move mirror_log.jsonl mirror\
+move mirror_demon.py mirror\
+
 move vector_embedder.py vector\
 move phi_weight_log.json vector\
 
-move mirror_demon.py mirror\
-move evolution_log.json mirror\
-move mirror_log.jsonl mirror\
-
-move g.py deploy\
-move deploy_bit_dashboard.bat deploy\
-
-echo [OK] Archivon súbory zoradené.
+echo [OK] Archivon systém bol uprataný.
 pause
