@@ -1,0 +1,6 @@
+{
+  "Imprintor": ["node-ARCH-001", "node-ARCH-003"],
+  "Curator": ["node-ARCH-002"],
+  "EchoDreamer": ["node-ARCH-004"],
+  "Navigator": ["node-ARCH-001", "node-ARCH-004"]
+}

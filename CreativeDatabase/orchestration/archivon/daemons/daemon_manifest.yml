@@ -1,0 +1,13 @@
+id: DÆMON_GLYPH_001
+name: Mnemosyne_Checker
+created: 2025-05-10T19:26:24.317192
+role: "Strážca zámerov, pamäte a poriadku"
+triggers:
+  - if: "commit without bookmark"
+  - if: "file added without manifest entry"
+  - if: "time_since_last_reflection > 48h"
+actions:
+  - log: daemon_trace.log
+  - ping: dashboard/bitface_view.md
+  - optionally: open dialogue with Geppetto
+symbolic_signature: "⧖"

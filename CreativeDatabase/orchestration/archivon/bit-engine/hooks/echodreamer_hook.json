@@ -1,0 +1,1 @@
+{ "route": "/echo/dream", "agent": "EchoDreamer", "action": "generate_symbol" }

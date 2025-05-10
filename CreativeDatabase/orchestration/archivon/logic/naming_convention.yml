@@ -1,0 +1,7 @@
+# naming_convention.yml
+files:
+  agent: "<name>_agent.py"
+  config: "<name>_config.yml"
+commits:
+  init: "+INIT: <description>"
+  update: "+UPDATE: <change>"

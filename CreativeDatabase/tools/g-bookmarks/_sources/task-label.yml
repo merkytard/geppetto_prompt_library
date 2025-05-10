@@ -1,0 +1,20 @@
+- id: node_canvas_fix
+  type: bug
+  tags:
+    - nodebase
+    - canvas
+    - rendering
+  status: done
+  assigned_to: geppetto
+  energy: «å
+  notes: "Node nebol srávne renderizovaná po refite datamodelu."
+- id: avatar_anim
+  type: task
+  tags:
+    - avatar
+    - animacia
+    - XP
+  status: progress
+  assigned_to: merkytard
+  energy: «®
+  notes: "Tamagoáci reaguje na urovnu XP podria vykkánzu a vyraz""

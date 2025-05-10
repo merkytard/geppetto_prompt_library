@@ -1,0 +1,14 @@
+{
+  "lite": {
+    "id": "archivon_lite",
+    "abilities": ["reflexia", "zapis", "naming_check"]
+  },
+  "core": {
+    "id": "archivon_core",
+    "abilities": ["memory_management", "hook_sync", "mirror_route"]
+  },
+  "deep": {
+    "id": "archivon_deep",
+    "abilities": ["vector_embed", "manifest_handler", "semantic_decision"]
+  }
+}

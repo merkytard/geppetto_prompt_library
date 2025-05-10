@@ -1,0 +1,1 @@
+{ "route": "/echo/write", "agent": "Imprintor", "action": "write_fragment" }

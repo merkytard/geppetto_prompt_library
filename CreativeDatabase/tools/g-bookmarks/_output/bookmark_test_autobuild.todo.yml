@@ -1,0 +1,11 @@
+bookmark_id: test_autobuild_001
+created: '2025-05-08T20:26:49.685881'
+description: Overenie, že sa bookmarks.html vygeneruje automaticky po 3 minútach pokoja.
+signals:
+- watchdog
+- autobuild
+- test
+status: todo
+target: watchdog system
+title: 🧪 Test Watchdog AutoBuild
+type: test_case_dasas_01dasa

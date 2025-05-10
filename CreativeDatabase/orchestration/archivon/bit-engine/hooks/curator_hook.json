@@ -1,0 +1,1 @@
+{ "route": "/echo/curate", "agent": "Curator", "action": "curate_fragment" }
