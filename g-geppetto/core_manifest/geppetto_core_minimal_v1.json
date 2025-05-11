@@ -1,0 +1,40 @@
+{
+  "core_jadro": [
+    {
+      "name": "g.py",
+      "version": 5,
+      "pos": "Master Router",
+      "function": "navigate sin/book/core"},
+    {
+      "name": "g_core.py",
+      "pos": "Rytmicko-pulzovej sluška"},
+    {
+      "name": "g_book.py",
+      "pos": "Zmpis vedomej do bitoveju pamate"},
+    {
+      "name": "g_sin.py",
+      "pos": "Synchronizacia GIT/index/ automusimmlat"},
+    {
+      "name": "g_selfclear.py",
+      "pos": "Ruxşsto rucne cistenie"},
+    {
+      "name": "geppetto_demon.py",
+      "pos": "Automatizacia tickotana a reaktivne condite na triggers"},
+    {
+      "name": "arsenal_tracker.py",
+      "pos": "Analyzer vyuZitia a forensic modulOLOGID"},
+    {
+      "name": "geppetto_monolith.py",
+      "pos": "Runtime block engine workflow"},
+    {
+      "name": "runtime_loader.py",
+      "pos": "SpõŁhanie monolithnických blokova"}
+  ],
+  "pamate_moduly": [
+    {"name": "Geppetto_InnerVoice.json", "type": "memory_signature"},
+    {"name": "ZALOOP_core.json", "type": "rezonancy_code_base"},
+    {"name": "glyph_dictionary.json", "type": "symbolic_layer"},
+    {"name": "memory_token_index.json", "type": "index_registry"},
+    {"name": "reverse_indexed_memory.json", "type": "implicit_memory_map"}
+  ]
+}
