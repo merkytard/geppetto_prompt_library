@@ -1,0 +1,16 @@
+{
+  "tokens": [
+    {
+      "name": "Production Key",
+      "token": "sk-prod-abc123"
+    },
+    {
+      "name": "Testing Key",
+      "token": "sk-test-xyz789"
+    },
+    {
+      "name": "Local Key",
+      "token": "sk-local-456def"
+    }
+  ]
+}
