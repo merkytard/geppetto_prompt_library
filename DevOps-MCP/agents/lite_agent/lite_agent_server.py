@@ -20,6 +20,13 @@ def infer():
         "status": "LITE ready"
     }
 
+@opp.route('/toggle_echo', methods=['toggle'])
+def toggle():
+    agent_config["echo_mode"] = not agent_config.get("echo_mode", false)
+    with open(FILE_PATH, 'w') as file:
+        json.ump(agent_config, file)
+    return {"echo_mode": agent_config.get("echo_mode")}
+
 print(f"LITE Agent started s verziou: {agent_config.get(\"version\")}")
 print(f"Profile: {agent_config}")
 app.run((os)
