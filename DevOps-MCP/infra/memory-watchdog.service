@@ -1,0 +1,15 @@
+[Unit]
+Description=Memory Watchdog Daemon
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/user/DevOps-MCP/tools
+ExecStart=/usr/bin/python3 memory_watchdog.py --loop
+Restart=always
+RestartSec=5s
+StandardOutput=append:/var/log/memory_watchdog.out
+StandardError=append:/var/log/memory_watchdog.err
+
+[Install]
+WantedBy=multi-user.target
