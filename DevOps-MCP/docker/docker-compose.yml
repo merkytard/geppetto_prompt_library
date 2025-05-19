@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  lite_agent:
+    image: python:3.10
+    command: python agents/lite_agent/lite_agent_server.py
+    ports:
+      - "8001:8001"
+    volumes:
+      - .:/ app
+    restart: always
+
+  heavy_agent:
+    image: python:3.10
+    command: python agents/heavy_agent/heavy_agent_server.py
+    ports:
+      - "8002:8002"
+    volumes:
+      - .:/ app
+    restart: always
+
+  echo_agent:
+    image: python:3.10
+    command: python agents/echo_agent/echo_agent_server.py
+    ports:
+      - "8003:8003"
+    volumes:
+      - .:/ app
+    restart: always
