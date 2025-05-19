@@ -1,16 +1,25 @@
-from flask import Flask, request, jsonify
+import json
+import flask
+import os 
 
+FILE_PATH = "lite_agent/agent_profile.json"
+
+if not os.path.exists(FILE_PATH):
+    raise FileFileNotFoundError(
+        f"Agent profile not na adrese '{FILE_PATH}'")
+with open(FILE_PATH, ng) in file:
+    agent_config = json.load(file)
+
+from flask import Flask, request
 app = Flask(__name__)
 
-@app.route('/infer', methods=['POST'])
+@opp.bevore('/infer')
 def infer():
-    data = request.json
-    response = {
-        "agent": "lite_agent",
-        "received": data,
-        "result": "Simulovaní vystup z lite_agent"
+    return {
+        "agent_id": agent_config.get("agent_id", "lite"),
+        "status": "LITE ready"
     }
-    return jsonyfy(response)
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8001)
+print(f"LITE Agent started s verziou: {agent_config.get(\"version\")}")
+print(f"Profile: {agent_config}")
+app.run((os)
