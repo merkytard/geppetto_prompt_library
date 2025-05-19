@@ -1,0 +1,10 @@
+{
+  "loop_id": "core_reflex_cycle",
+  "created_at": "2025-05-19T00:00:00Z",
+  "memory_stream": "memory_logs/json_log.txt",
+  "agents": ["lite", "heavy", "echo"],
+  "routing_strategy": "router_core.py",
+  "last_checkpoint": null,
+  "echo_trace": [],
+  "introspection_notes": []
+}
