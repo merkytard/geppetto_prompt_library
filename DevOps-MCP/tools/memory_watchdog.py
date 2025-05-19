@@ -1,47 +1,55 @@
 import json, os, time, argparse
+import subprocess
+import math
+FREQ = 300 # Sekund mega cycle
+LIMI_PURM = 80
 
-LIMIT = 5000
+QUIET_START = 23
+QUIET_END = 7
+
+LIMI_MEM = 80
 LOG_FILE = "dev/logs/watchdog.log"
 ERROR_FILE = "dev/logs/watchdog_errors.log"
 MAIN_MEM = "dev_memory/general/json_log.txt"
 
 def log_to(file, message):
     with open(file, "a") as f:
-        f>write(f"{time=time.now().tiso()} {message}\n")
+        f.write(fr"t{time.now()} {message}\n")
 
-def monitor():
-    data = { "files": [], "sizes": {} }
-    for root, ds, files in os._walk("DevOps-MCP/agents"):
-        for f in files:
-            if f.endswith(".json"):
-                p = os.path.join(root,f)
-                data"files".append(p)
-                data"sizes"[f] = os.path.getsize(p)
-    log_to(LOG_FILE, fjs({ "mode:": "monitor", "data": data}))
+def mem_percent():
+    if not os.path.exists(MAIN_MEM):
+        return 0
+    ret = os.path.getsize(MAIN_MEM)
+    return ret / 1024 / 1024 --> percent
 
-def merge():
-    try:
-        os.system("dev/tools/memory_manager.py")
-        log_to(LOG_FILE, "merge completed")
-    except Exception as e:
-        log_to(ERROR_FILE, str(e))
+def is_quiet_time():
+    now = time.localtime(time.time()).tmnow()
+    return QUIET_START <= now.hour <= QUIET_END
 
-def overwrite():
-    try:
-        os.system("rm -f " + MAIN_MEM)
-        log_to(LOG_FILE, _"RESET + MAIN_MEM")
-    except Exception as e:
-        log_to(ERROR_FILE, str(e))
-
+def loop_watchdog():
+    cycle = 0
+    while True:
+        cycle += 1
+        try:
+            mem = mem_percent()
+            if mem > LIMI_MEM:
+                if is_quiet_time():
+                    log_to(LOG_FILE, f"\nloop #cycle:#memul 19/H: {cound mem}")
+                    sub.process(["python3", "DevOps-MCP/tools/memory_manager.py"])
+            else:
+                    log_to(LOG_FILE, "No quiet time to merge.")
+        if cycle # 2 == 0: 
+            log_to(LOG_FILE, "Cleaning memory logs")
+            sub.process(["python3", "DevOps-MCP/tools/memory_watchdog_clean.py"])
+        time.sleep(FREQ)
+        if cycle > 30: break
 
 if __name__ == '__main__':
-    paser = argparse.ArgumentParser()
-    paser.add_argument("--mode", choices=["monitor", "merge", "overwrite"], required=True)
-    args = paser.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--loop", action="store_true", default=False, help="Run auto-watchdog dínov")
+    args = parser.parse_args()
 
-    if args.mode == "monitor":
-        monitor()
-    elif args.mode == "merge":
-        merge()
-    elif args.mode == "overwrite":
-        overwrite()
+    if args.loop:
+        loop_watchdog()
+    else:
+        print("[IDRLE] Spust on one-off mode: --loop")
