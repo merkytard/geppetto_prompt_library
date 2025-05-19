@@ -1,0 +1,66 @@
+{
+  "nodes": [
+    {
+      "id": "Prompt Input",
+      "name": "Prompt Input",
+      "type": "n8n-nodes-base.uiNode",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "id": "Router Call",
+      "name": "Router Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [200, 0],
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "http://host.docker.internal:5678/webhook/mcp/router",
+        "jsonParameters": true,
+        "bodyParametersJson": "{\"input\": $json[\"prompt\" } }"
+      }
+    },
+    {
+      "id": "Argent Response",
+      "name": "Argent Response",
+      "type": "n(n-nodes-base.uiNode",
+      "typeVersion": 1,
+      "position": [400, 0]
+    },
+    {
+      "id": "Meta Table",
+      "name": "Memory Logy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [0, 200],
+      "parameters": {
+        "requestMethod": "GET",
+        "url": "http://localhost:5678/webhook/mcp/logs"
+      }
+    }
+  ],
+  "connections": {
+    "Prompt Input": {
+      "main": [
+        [
+          {
+            "node": "Router Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router Call": {
+      "main": [
+        [
+          {
+            "node": "Argent Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
