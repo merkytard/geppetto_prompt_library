@@ -1,0 +1,8 @@
+{
+  "agent_id": "echo",
+  "description": "Reflexnávia odhlasu promptu echovo stylom",
+  "skills": ["paroty", "checksum"],
+  "memory_file": "memory_echo.json",
+  "version": "1.0",
+  "echo_mode": true
+}
