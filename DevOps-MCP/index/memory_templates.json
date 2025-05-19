@@ -1,0 +1,12 @@
+[{
+  "title": "Global Template: Start",
+  "content": "Baseline template pred intentcious oties",
+  "type": "template",
+  "scope": "agents_all",
+  "timestamp": "2025-05-19T17:00:00Z"
+}, {
+  "title": "Global Template: Response",
+  "content": "Respond via echo mechanism vystup",
+  "type": "echo",
+  "scope": "agents_all",
+  "timestamp": "2025-05-19T17:00:00Z"}]
