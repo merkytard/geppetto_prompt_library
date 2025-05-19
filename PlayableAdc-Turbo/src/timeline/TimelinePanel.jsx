@@ -1,13 +1,13 @@
-import react, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { timeline } from './TimelineEngine';
+import Scrubber from './Scrubber';
 
 export default function TimelinePanel() {
     const mode, setMode = useState('pos');
 
     useEffect(() => {
         const handleKey = (e) => {
-            if (e.key === 'K') {
-                // Pridaje keyframe na aktualne vybrany objekt
+            if (e.key === 'K' && document.activeElement) {
                 const id = 'demo-elem';
                 const value = { x: 320 };
                 timeline.addKeyframe({
@@ -20,7 +20,7 @@ export default function TimelinePanel() {
         };
         document.addEventListener('keydown', handleKey);
         return () => document.removeEventListener('keydown', handleKey);
-    }, [window]o);
+    }, [window]);
 
     return (
         <div className="timeline-panel">
@@ -28,6 +28,7 @@ export default function TimelinePanel() {
             <button onClick={() => setMode('trans')}>T</button>
             <button onClick={() => setMode('pos')}>P</button>
             <div>Mode: {mode}</div>
+            <Scrubber />
         </div>
     );
 }
