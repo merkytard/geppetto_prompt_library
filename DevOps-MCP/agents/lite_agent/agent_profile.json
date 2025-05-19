@@ -1,0 +1,8 @@
+{
+  "agent_id": "lite",
+  "description": "Rychly heuristická logik náhlk informaciámi",
+  "skills": ["summary", "basic parse"],
+  "memory_file": "memory_lite.json",
+  "version": "1.0",
+  "echo_mode": false
+}
