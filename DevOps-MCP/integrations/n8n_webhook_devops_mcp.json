@@ -1,0 +1,44 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "path": "mcp/start",
+        "method": "POST",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "Webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "http://host.docker.internal:8001/infer",
+        "jsonParameters": true,
+        "options": {},
+        "bodyParametersJson": "{\n  \"intent\": {$json[\"input\"]},\n  \"sensor\": \"n8n_web\",\n  \"context\": null,\n  \"timestamp\": \"{$now}\"\n}"
+    },
+      "id": "POST to Lite Agent",
+      "name": "POST to Lite Agent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "POST to Lite Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
