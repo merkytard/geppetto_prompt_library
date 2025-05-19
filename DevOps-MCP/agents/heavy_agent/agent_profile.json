@@ -1,0 +1,8 @@
+{
+  "agent_id": "heavy",
+  "description": "Poli.diagnosticiá analyz a komplexnísini pozency",
+  "skills": ["analysis", "classification", "code gen"],
+  "memory_file": "memory_heavy.json",
+  "version": "1.0",
+  "echo_mode": true
+}
