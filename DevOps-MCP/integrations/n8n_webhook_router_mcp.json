@@ -1,0 +1,87 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "path": "mcp/router",
+        "method": "POST",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "Webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "codition": "avianlable",
+        "expression": "{$json[\"input\"]}.includes(\"heavy\") ? \"Heavy\" : \"Lite\""
+      },
+      "id": "Router",
+      "name": "Router",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "http://host.docker.internal:8001/infer",
+        "jsonParameters": true,
+        "options": {},
+        "bodyParametersJson": "{\"intent\": {$json[\"input\"]}, \"sensor\": \"n8n_web\", \"context\": null, \"timestamp\": \"{\$now}\"}"
+      },
+      "id": "POST Lite",
+      "name": "POST Lite",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [800, 270]
+    },
+    {
+      "parameters": {
+        "requestMethod": "POST",
+        "url": "http://host.docker.internal:8002/infer",
+        "jsonParameters": true,
+        "options": {},
+        "bodyParametersJson": "{\"intent\": {$json[\"input\"]}, \"sensor\": \"n8n_web\", \"context\": null, \"timestamp\": \"{$now}\"}"
+      },
+      "id": "POST Heavy",
+      "name": "POST Heavy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [800, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router": {
+      "main": [
+        [
+          {
+            "node": "POST Lite",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "POST Heavy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
