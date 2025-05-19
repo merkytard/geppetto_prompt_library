@@ -1,0 +1,52 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "path": "mcp/logs",
+        "method": "GET",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "Webhook",
+      "name": "Webhook: Get Logs",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "command": "python3 shared/memory_reader.py",
+        "executeInternally": true
+      },
+      "id": "Execute Reader",
+      "name": "Execute Reader",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "responseContentType": "application/json",
+        "responseBody": "${node[\"Execute Reader\"].output}"
+      },
+      "id": "Response",
+      "name": "Response",
+      "type": "n8n-nodes-base.response",
+      "typeVersion": 1,
+      "position": [800, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute Reader",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
