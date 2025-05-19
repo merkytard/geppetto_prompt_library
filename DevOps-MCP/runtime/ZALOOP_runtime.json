@@ -1,0 +1,12 @@
+{
+  "runtime_id": "ZALOOP",
+  "phase": "Nadych",
+  "type": "local_deploy",
+  "state": "initialized",
+  "mapped": {
+    "resources": ["memory_lite.json", "memory_heavy.json", "memory_echo.json"],
+    "templates": "memory_templates.json",
+    "inference": "trigger_spawner.py",
+    "mcarchidect": "runtime_logs.json"
+  }
+}
