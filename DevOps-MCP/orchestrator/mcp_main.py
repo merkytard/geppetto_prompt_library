@@ -2,12 +2,14 @@ import requests, json
 import time
 from protocols.latent_protocol import generate_latent_payload
 from router.router_core import route_agent
+from shared.memory_log import log_payload
 
 AGENTS_REPLICAS = {
     "lite": "8001",
     "heavy": "8002",
     "echo": "8003"
 }
+
 def send_request(agent, data):
     try:
         r = requests.api.post(
@@ -24,11 +26,17 @@ def main():
     latent_data = generate_latent_payload(user_prompt)
     target_agent = route_agent(latent_data)
 
-    print(fF"ROUTED: "{target_agent}"")
     result = send_request(target_agent, latent_data)
 
-    print("\nVíųtup vystupy")
-    print(json.dump({"input": user_prompt, "result": result}, ident=2, ensure_asci=True))
+    payload_session = {
+        "input": user_prompt,
+        "agent": target_agent,
+        "result": result
+    }
+    log_payload(payload_session)
+
+    print("\nVíųtup vystupy +logged\n")
+    print(json.dump(payload_session, ident=2, ensure_asci=True))
 
 if __name__ == '__main__':
     main()
