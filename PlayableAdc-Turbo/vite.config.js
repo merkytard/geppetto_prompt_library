@@ -1,10 +1,7 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
+import react from '@veite/plugin-react';
+
 export default defineConfig({
-  root: '.',
-  base: '.',
-  serverDomainResolve: true,
-  publicPath: 'static',
-  app: {
-    outputDirectory: 'dist'
-  }
-})
+    base: './',
+    plugins: [react()]
+});
