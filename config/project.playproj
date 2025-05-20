@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "projectName": "PlayableAdc-Turbo",
+    "version": "1.0.0",
+    "createdAt": "2025-05-20T10:35:00Z",
+    "author": "Merkytard"
+  },
+  "scenes": [
+    {
+      "id": "scene-001",
+      "name": "MainScene",
+      "layers": [
+        {
+          "id": "layer-bg",
+          "type": "image",
+          "asset": "background.png",
+          "position": [0, 0],
+          "scale": 1,
+          "keyframes": []
+        },
+        {
+          "id": "layer-playbtn",
+          "type": "button",
+          "asset": "play.png",
+          "position": [128, 512],
+          "keyframes": [
+            { "time": 0, "scale": 1 },
+            { "time": 0.5, "scale": 1.1, "ease": "easeOut" },
+            { "time": 1, "scale": 1 }
+          ],
+          "hooks": [
+            { "event": "click", "action": "playAudio", "sound": "click.mp3"}
+          ]
+        }
+      ]
+    }
+  ],
+  "assets": {
+    "images": ["background.png", "play.png"],
+    "sounds": ["click.mp3"]
+  },
+  "timeline": {
+    "duration": 2,
+    "fps": 60,
+    "easeCurves": true
+  },
+  "settings": {
+    "gridEnabled": true,
+    "snapToGrid": false,
+    "backgroundColor": "#111111"
+  }
+}
