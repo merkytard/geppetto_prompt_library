@@ -1,0 +1,13 @@
+version: '3'
+services:
+  playturbo:
+    build: .
+    context: .
+    ports: 
+      - 8080:0
+    environment:
+      - PORT=8080
+      - MODE=DEBUG
+    volumes:
+      - ./assets:/application/assets
+    restart: always
