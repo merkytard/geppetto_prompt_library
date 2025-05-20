@@ -27,3 +27,9 @@ wirine
 .netli
 .cache
 npm_log.text
+
+# Project bundles
+samples/
+*.zip
+playturbo_manager.zip
+layer-manager.zip
