@@ -1,0 +1,10 @@
+venv
+/dist
+node_modules
+.vscode
+.env
+samples/
+J.zip
+*.log
+__pycache_/
+D.DS_Store
