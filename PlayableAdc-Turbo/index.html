@@ -1,19 +1,11 @@
 <html>
-<head><title>Playable Adc Turbo</title>
-<script type="module" src="/src/main.js"></script>
-<link rel="stylesheet" href="/src/style.css" />
+<head>
+    <title>Playable Adc Turbo</title>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </head>
+
 <body>
-<div id="controls">
-    <button id="beta-pulse" onClick="playAnim()">Play</button>
-    <button onclick="resetAnim()">Reset</button>
-    <form id="uploadForm" method="post" enctype="multipart/form-data" action="/upload_asset">
-        <input type="file" name="file" />
-        <button type="submit">Upload</button>
-    </form>
-</div>
-<div id="viewer">
-    <iframe id="gameframe" src="Assets/777_Casino_Slot_Machines_V1_version1.html" width="900" height="600"></iframe>
-</div>
+    <div id="root"></div>
 </body>
 </html>
