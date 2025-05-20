@@ -1,3 +1,29 @@
-.env
-__pycache__
-.pyc
+# 🕯 Git Ignore
+
+node_modules
+dist
+venv/
+
+# VsCode config
+.vscode
+.run.log
+.launch.json
+.ds_store
+
+# Python venv
+virtual
+.venv/
+__vs__
+
+# System ignore
+coverage/
+thumbs/
+*.log
+output/
+
+[Below auto generated]
+..svg/
+wirine
+.netli
+.cache
+npm_log.text
