@@ -5,8 +5,8 @@ import SettingsModal from './ui/SettingsModal';
 import ExportPanel from './ui/ExportPanel';
 import ImportPanel from './ui/ImportPanel';
 import CanvasPreview from './ui/CanvasPreview';
+import Scrubber from './ui/Scrubber';
 import {usePlaybackEngine} from './hooks/usePlaybackEngine';
-
 
 export default function App() {
     const [Over, setOver] = useState(true);
@@ -15,7 +15,7 @@ export default function App() {
     return (
         <div className="app">
             <h1>PlayableAdc Turbo Editor</h1>
-            <button onClick={() => setOver(true)}>Settings</button>
+            <button onClick={() => setOver((true)}>Settings</button>
             <ExportPanel />
             <ImportPanel />
             <button onClick={togglePlay}>
@@ -23,6 +23,7 @@ export default function App() {
             </button>
             <SceneSelector />
             <CanvasPreview />
+            <Scrubber />
             <TimelinePanel />
             {Over && <SettingsModal />}
         </div>
