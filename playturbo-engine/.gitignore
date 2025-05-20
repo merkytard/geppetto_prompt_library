@@ -1,0 +1,16 @@
+node_modules/
+.venv
+/.env
+__pycache_/
+.pyc
+*.plog
+dist/
+build/
+.cache/
+.vscode/
+.DS_Store
+*.sqlite
+*.zip
+.idea/
+*.egg-info/
+coverage/
