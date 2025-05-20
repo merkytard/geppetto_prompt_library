@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "wconfigs": [
+    {
+      "name": "Start Vite Dev Server",
+      "type": "node.attach",
+      "request": "launch",
+      "comand":"npm run dev",
+      "coverage": "terminal"
+    }
+  ]
+}
