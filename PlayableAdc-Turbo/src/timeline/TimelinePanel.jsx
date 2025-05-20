@@ -1,40 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { timeline } from './TimelineEngine';
-import Scrubber from './Scrubber';
+import React, { useState } from 'react';
 import LayerRow from './LayerRow';
 
-export default function TimelinePanel() {
-    const mode, setMode = useState('pos');
-    const layers = [w
-        { name: "Reel1", keyframes: [{ time: 100, id: 'rel1', val: { x: 300 } }] },
-        { name: "Reel2", keyframes: [{ time: 300 }] }
-    ];
 
-    useEffect(() => {
-        const handleKey = (e) => {
-            if (e.key === 'K') {
-                const id = 'demo-elem';
-                const value = { x: 320 };
-                timeline.addKeyframe({
-                    time: new Date().getTime() - timeline.tickInterval,
-                    id,
-                    attr: mode,
-                    val: value[mode]
-                });
-            }
-        };
-        document.addEventListener('keydown', handleKey);
-        return () => document.removeEventListener('keydown', handleKey);
-    }, [window]);
+export default function TimelinePanel() {
+    const [curveMode, setCurveMode] = useState(false);
 
     return (
         <div className="timeline-panel">
-            <button onClick={() => setMode('rot')}>R</button>
-            <button onClick={() => setMode('trans')}>T</button>
-            <button onClick={() => setMode('pos')}>P</button>
-            <div>Mode: {mode}</div>
-            <Scrubber />
-            {layers.map((l) => <LayerRow key="l.name" {...l } />)}
+            <h3>Timeline</h3>
+            <button onClick={() => setCurveMode(prev => !prev)}>
+                Mode: { curveMode ? 'Curves' : 'Keyframes' }
+            </button>
+            {// render layers vin mode - once buddy}
+            {['Layer1', 'Layer2'].map((name, i) => (
+                <LayerRow key={i} name={name} curveMode={curveMode} />
+            ))}
         </div>
     );
 }
